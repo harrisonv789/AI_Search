@@ -2,12 +2,12 @@
 	"Targets": [
 		{
 			"Name": "FIT3094_A1_Code",
-			"Path": "/Users/harrisonverrios/Documents/Uni/FIT3094 (Artificial Life)/Labs/Lab 1/FIT3094_Week1_Base/Source/FIT3094_A1_Code.Target.cs",
+			"Path": "/Users/harrisonverrios/Documents/Uni/FIT3094 (Artificial Life)/Assignments/UE4_AI_Assignment_1/FIT3094_Week1_Base/Source/FIT3094_A1_Code.Target.cs",
 			"Type": "Game"
 		},
 		{
 			"Name": "FIT3094_A1_CodeEditor",
-			"Path": "/Users/harrisonverrios/Documents/Uni/FIT3094 (Artificial Life)/Labs/Lab 1/FIT3094_Week1_Base/Source/FIT3094_A1_CodeEditor.Target.cs",
+			"Path": "/Users/harrisonverrios/Documents/Uni/FIT3094 (Artificial Life)/Assignments/UE4_AI_Assignment_1/FIT3094_Week1_Base/Source/FIT3094_A1_CodeEditor.Target.cs",
 			"Type": "Editor"
 		}
 	]

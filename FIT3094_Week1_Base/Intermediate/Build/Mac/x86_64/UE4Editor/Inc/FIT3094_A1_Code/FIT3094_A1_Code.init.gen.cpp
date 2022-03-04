@@ -21,7 +21,7 @@ void EmptyLinkFunctionForGeneratedCodeFIT3094_A1_Code_init() {}
 				nullptr,
 				0,
 				PKG_CompiledIn | 0x00000000,
-				0xD8C13545,
+				0xE4F3365F,
 				0x08FA679C,
 				METADATA_PARAMS(nullptr, 0)
 			};

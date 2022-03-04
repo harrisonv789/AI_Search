@@ -31,6 +31,15 @@ void EmptyLinkFunctionForGeneratedCodeShip() {}
 #if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam Class_MetaDataParams[];
 #endif
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_MoveSpeed_MetaData[];
+#endif
+		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_MoveSpeed;
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_Tolerance_MetaData[];
+#endif
+		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_Tolerance;
+		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
 		static const FCppClassTypeInfoStatic StaticCppClassTypeInfo;
 		static const UE4CodeGen_Private::FClassParams ClassParams;
 	};
@@ -44,6 +53,28 @@ void EmptyLinkFunctionForGeneratedCodeShip() {}
 		{ "ModuleRelativePath", "Ship.h" },
 	};
 #endif
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AShip_Statics::NewProp_MoveSpeed_MetaData[] = {
+		{ "Category", "Stats" },
+		{ "Comment", "// Stores the speed that the ship can move at\n" },
+		{ "ModuleRelativePath", "Ship.h" },
+		{ "ToolTip", "Stores the speed that the ship can move at" },
+	};
+#endif
+	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UClass_AShip_Statics::NewProp_MoveSpeed = { "MoveSpeed", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AShip, MoveSpeed), METADATA_PARAMS(Z_Construct_UClass_AShip_Statics::NewProp_MoveSpeed_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AShip_Statics::NewProp_MoveSpeed_MetaData)) };
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AShip_Statics::NewProp_Tolerance_MetaData[] = {
+		{ "Category", "Stats" },
+		{ "Comment", "// The distance between a point on the path and the current position before reaching the end\n" },
+		{ "ModuleRelativePath", "Ship.h" },
+		{ "ToolTip", "The distance between a point on the path and the current position before reaching the end" },
+	};
+#endif
+	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UClass_AShip_Statics::NewProp_Tolerance = { "Tolerance", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AShip, Tolerance), METADATA_PARAMS(Z_Construct_UClass_AShip_Statics::NewProp_Tolerance_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AShip_Statics::NewProp_Tolerance_MetaData)) };
+	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AShip_Statics::PropPointers[] = {
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AShip_Statics::NewProp_MoveSpeed,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AShip_Statics::NewProp_Tolerance,
+	};
 	const FCppClassTypeInfoStatic Z_Construct_UClass_AShip_Statics::StaticCppClassTypeInfo = {
 		TCppClassTypeTraits<AShip>::IsAbstract,
 	};
@@ -53,11 +84,11 @@ void EmptyLinkFunctionForGeneratedCodeShip() {}
 		&StaticCppClassTypeInfo,
 		DependentSingletons,
 		nullptr,
-		nullptr,
+		Z_Construct_UClass_AShip_Statics::PropPointers,
 		nullptr,
 		UE_ARRAY_COUNT(DependentSingletons),
 		0,
-		0,
+		UE_ARRAY_COUNT(Z_Construct_UClass_AShip_Statics::PropPointers),
 		0,
 		0x009000A4u,
 		METADATA_PARAMS(Z_Construct_UClass_AShip_Statics::Class_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UClass_AShip_Statics::Class_MetaDataParams))
@@ -71,7 +102,7 @@ void EmptyLinkFunctionForGeneratedCodeShip() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(AShip, 2020501813);
+	IMPLEMENT_CLASS(AShip, 3635240492);
 	template<> FIT3094_A1_CODE_API UClass* StaticClass<AShip>()
 	{
 		return AShip::StaticClass();
