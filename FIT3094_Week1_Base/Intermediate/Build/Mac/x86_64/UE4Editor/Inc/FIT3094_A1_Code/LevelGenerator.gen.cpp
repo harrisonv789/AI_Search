@@ -18,8 +18,8 @@ void EmptyLinkFunctionForGeneratedCodeLevelGenerator() {}
 	ENGINE_API UClass* Z_Construct_UClass_AActor();
 	UPackage* Z_Construct_UPackage__Script_FIT3094_A1_Code();
 	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FVector2D();
-	FIT3094_A1_CODE_API UClass* Z_Construct_UClass_AGold_NoRegister();
 	ENGINE_API UClass* Z_Construct_UClass_AActor_NoRegister();
+	FIT3094_A1_CODE_API UClass* Z_Construct_UClass_AGold_NoRegister();
 	COREUOBJECT_API UClass* Z_Construct_UClass_UClass();
 // End Cross Module References
 	DEFINE_FUNCTION(ALevelGenerator::execGenerateWorldFromFile)
@@ -99,11 +99,20 @@ void EmptyLinkFunctionForGeneratedCodeLevelGenerator() {}
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_GoldArray_MetaData[];
 #endif
 		static const UE4CodeGen_Private::FArrayPropertyParams NewProp_GoldArray;
+		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_PathDisplayActors_Inner;
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_PathDisplayActors_MetaData[];
+#endif
+		static const UE4CodeGen_Private::FArrayPropertyParams NewProp_PathDisplayActors;
 		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_GoldActors_Inner;
 #if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_GoldActors_MetaData[];
 #endif
 		static const UE4CodeGen_Private::FArrayPropertyParams NewProp_GoldActors;
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_PathDisplayBlueprint_MetaData[];
+#endif
+		static const UE4CodeGen_Private::FClassPropertyParams NewProp_PathDisplayBlueprint;
 #if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_DeepBlueprint_MetaData[];
 #endif
@@ -173,57 +182,70 @@ void EmptyLinkFunctionForGeneratedCodeLevelGenerator() {}
 	};
 #endif
 	const UE4CodeGen_Private::FArrayPropertyParams Z_Construct_UClass_ALevelGenerator_Statics::NewProp_GoldArray = { "GoldArray", nullptr, (EPropertyFlags)0x0010000000000014, UE4CodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ALevelGenerator, GoldArray), EArrayPropertyFlags::None, METADATA_PARAMS(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_GoldArray_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_GoldArray_MetaData)) };
+	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ALevelGenerator_Statics::NewProp_PathDisplayActors_Inner = { "PathDisplayActors", nullptr, (EPropertyFlags)0x0000000000000000, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, Z_Construct_UClass_AActor_NoRegister, METADATA_PARAMS(nullptr, 0) };
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ALevelGenerator_Statics::NewProp_PathDisplayActors_MetaData[] = {
+		{ "Category", "LevelGenerator" },
+		{ "Comment", "// The array of actors to be displayed on a path\n" },
+		{ "ModuleRelativePath", "LevelGenerator.h" },
+		{ "ToolTip", "The array of actors to be displayed on a path" },
+	};
+#endif
+	const UE4CodeGen_Private::FArrayPropertyParams Z_Construct_UClass_ALevelGenerator_Statics::NewProp_PathDisplayActors = { "PathDisplayActors", nullptr, (EPropertyFlags)0x0010000000000014, UE4CodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ALevelGenerator, PathDisplayActors), EArrayPropertyFlags::None, METADATA_PARAMS(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_PathDisplayActors_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_PathDisplayActors_MetaData)) };
 	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ALevelGenerator_Statics::NewProp_GoldActors_Inner = { "GoldActors", nullptr, (EPropertyFlags)0x0000000000000000, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, Z_Construct_UClass_AGold_NoRegister, METADATA_PARAMS(nullptr, 0) };
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ALevelGenerator_Statics::NewProp_GoldActors_MetaData[] = {
+		{ "Category", "LevelGenerator" },
 		{ "Comment", "// A list of gold actors\n" },
 		{ "ModuleRelativePath", "LevelGenerator.h" },
 		{ "ToolTip", "A list of gold actors" },
 	};
 #endif
-	const UE4CodeGen_Private::FArrayPropertyParams Z_Construct_UClass_ALevelGenerator_Statics::NewProp_GoldActors = { "GoldActors", nullptr, (EPropertyFlags)0x0010000000000000, UE4CodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ALevelGenerator, GoldActors), EArrayPropertyFlags::None, METADATA_PARAMS(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_GoldActors_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_GoldActors_MetaData)) };
+	const UE4CodeGen_Private::FArrayPropertyParams Z_Construct_UClass_ALevelGenerator_Statics::NewProp_GoldActors = { "GoldActors", nullptr, (EPropertyFlags)0x0010000000000014, UE4CodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ALevelGenerator, GoldActors), EArrayPropertyFlags::None, METADATA_PARAMS(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_GoldActors_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_GoldActors_MetaData)) };
 #if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ALevelGenerator_Statics::NewProp_DeepBlueprint_MetaData[] = {
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ALevelGenerator_Statics::NewProp_PathDisplayBlueprint_MetaData[] = {
 		{ "Category", "Entities" },
 		{ "Comment", "// Actors to spawn in the world\n" },
-		{ "ExposeOnSpawn", "TRUE" },
 		{ "ModuleRelativePath", "LevelGenerator.h" },
 		{ "ToolTip", "Actors to spawn in the world" },
 	};
 #endif
-	const UE4CodeGen_Private::FClassPropertyParams Z_Construct_UClass_ALevelGenerator_Statics::NewProp_DeepBlueprint = { "DeepBlueprint", nullptr, (EPropertyFlags)0x0015000000000015, UE4CodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ALevelGenerator, DeepBlueprint), Z_Construct_UClass_AActor_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_DeepBlueprint_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_DeepBlueprint_MetaData)) };
+	const UE4CodeGen_Private::FClassPropertyParams Z_Construct_UClass_ALevelGenerator_Statics::NewProp_PathDisplayBlueprint = { "PathDisplayBlueprint", nullptr, (EPropertyFlags)0x0014000000000001, UE4CodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ALevelGenerator, PathDisplayBlueprint), Z_Construct_UClass_AActor_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_PathDisplayBlueprint_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_PathDisplayBlueprint_MetaData)) };
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ALevelGenerator_Statics::NewProp_DeepBlueprint_MetaData[] = {
+		{ "Category", "Entities" },
+		{ "ModuleRelativePath", "LevelGenerator.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FClassPropertyParams Z_Construct_UClass_ALevelGenerator_Statics::NewProp_DeepBlueprint = { "DeepBlueprint", nullptr, (EPropertyFlags)0x0014000000000001, UE4CodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ALevelGenerator, DeepBlueprint), Z_Construct_UClass_AActor_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_DeepBlueprint_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_DeepBlueprint_MetaData)) };
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ALevelGenerator_Statics::NewProp_LandBlueprint_MetaData[] = {
 		{ "Category", "Entities" },
-		{ "ExposeOnSpawn", "TRUE" },
 		{ "ModuleRelativePath", "LevelGenerator.h" },
 	};
 #endif
-	const UE4CodeGen_Private::FClassPropertyParams Z_Construct_UClass_ALevelGenerator_Statics::NewProp_LandBlueprint = { "LandBlueprint", nullptr, (EPropertyFlags)0x0015000000000015, UE4CodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ALevelGenerator, LandBlueprint), Z_Construct_UClass_AActor_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_LandBlueprint_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_LandBlueprint_MetaData)) };
+	const UE4CodeGen_Private::FClassPropertyParams Z_Construct_UClass_ALevelGenerator_Statics::NewProp_LandBlueprint = { "LandBlueprint", nullptr, (EPropertyFlags)0x0014000000000001, UE4CodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ALevelGenerator, LandBlueprint), Z_Construct_UClass_AActor_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_LandBlueprint_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_LandBlueprint_MetaData)) };
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ALevelGenerator_Statics::NewProp_ShallowBlueprint_MetaData[] = {
 		{ "Category", "Entities" },
-		{ "ExposeOnSpawn", "TRUE" },
 		{ "ModuleRelativePath", "LevelGenerator.h" },
 	};
 #endif
-	const UE4CodeGen_Private::FClassPropertyParams Z_Construct_UClass_ALevelGenerator_Statics::NewProp_ShallowBlueprint = { "ShallowBlueprint", nullptr, (EPropertyFlags)0x0015000000000015, UE4CodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ALevelGenerator, ShallowBlueprint), Z_Construct_UClass_AActor_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_ShallowBlueprint_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_ShallowBlueprint_MetaData)) };
+	const UE4CodeGen_Private::FClassPropertyParams Z_Construct_UClass_ALevelGenerator_Statics::NewProp_ShallowBlueprint = { "ShallowBlueprint", nullptr, (EPropertyFlags)0x0014000000000001, UE4CodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ALevelGenerator, ShallowBlueprint), Z_Construct_UClass_AActor_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_ShallowBlueprint_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_ShallowBlueprint_MetaData)) };
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ALevelGenerator_Statics::NewProp_GoldBlueprint_MetaData[] = {
 		{ "Category", "Entities" },
-		{ "ExposeOnSpawn", "TRUE" },
 		{ "ModuleRelativePath", "LevelGenerator.h" },
 	};
 #endif
-	const UE4CodeGen_Private::FClassPropertyParams Z_Construct_UClass_ALevelGenerator_Statics::NewProp_GoldBlueprint = { "GoldBlueprint", nullptr, (EPropertyFlags)0x0015000000000015, UE4CodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ALevelGenerator, GoldBlueprint), Z_Construct_UClass_AActor_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_GoldBlueprint_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_GoldBlueprint_MetaData)) };
+	const UE4CodeGen_Private::FClassPropertyParams Z_Construct_UClass_ALevelGenerator_Statics::NewProp_GoldBlueprint = { "GoldBlueprint", nullptr, (EPropertyFlags)0x0014000000000001, UE4CodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ALevelGenerator, GoldBlueprint), Z_Construct_UClass_AActor_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_GoldBlueprint_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_GoldBlueprint_MetaData)) };
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ALevelGenerator_Statics::NewProp_ShipBlueprint_MetaData[] = {
 		{ "Category", "Entities" },
-		{ "ExposeOnSpawn", "TRUE" },
 		{ "ModuleRelativePath", "LevelGenerator.h" },
 	};
 #endif
-	const UE4CodeGen_Private::FClassPropertyParams Z_Construct_UClass_ALevelGenerator_Statics::NewProp_ShipBlueprint = { "ShipBlueprint", nullptr, (EPropertyFlags)0x0015000000000015, UE4CodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ALevelGenerator, ShipBlueprint), Z_Construct_UClass_AActor_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_ShipBlueprint_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_ShipBlueprint_MetaData)) };
+	const UE4CodeGen_Private::FClassPropertyParams Z_Construct_UClass_ALevelGenerator_Statics::NewProp_ShipBlueprint = { "ShipBlueprint", nullptr, (EPropertyFlags)0x0014000000000001, UE4CodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ALevelGenerator, ShipBlueprint), Z_Construct_UClass_AActor_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_ShipBlueprint_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ALevelGenerator_Statics::NewProp_ShipBlueprint_MetaData)) };
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ALevelGenerator_Statics::NewProp_Camera_MetaData[] = {
 		{ "Category", "Entities" },
@@ -239,8 +261,11 @@ void EmptyLinkFunctionForGeneratedCodeLevelGenerator() {}
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ALevelGenerator_Statics::NewProp_MapSizeY,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ALevelGenerator_Statics::NewProp_GoldArray_Inner,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ALevelGenerator_Statics::NewProp_GoldArray,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ALevelGenerator_Statics::NewProp_PathDisplayActors_Inner,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ALevelGenerator_Statics::NewProp_PathDisplayActors,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ALevelGenerator_Statics::NewProp_GoldActors_Inner,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ALevelGenerator_Statics::NewProp_GoldActors,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ALevelGenerator_Statics::NewProp_PathDisplayBlueprint,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ALevelGenerator_Statics::NewProp_DeepBlueprint,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ALevelGenerator_Statics::NewProp_LandBlueprint,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ALevelGenerator_Statics::NewProp_ShallowBlueprint,
@@ -275,7 +300,7 @@ void EmptyLinkFunctionForGeneratedCodeLevelGenerator() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(ALevelGenerator, 3088497292);
+	IMPLEMENT_CLASS(ALevelGenerator, 3705282946);
 	template<> FIT3094_A1_CODE_API UClass* StaticClass<ALevelGenerator>()
 	{
 		return ALevelGenerator::StaticClass();

@@ -13,6 +13,9 @@ GridNode::GridNode()
 	GridType = DeepWater;
 	Parent = nullptr;
 	ObjectAtLocation = nullptr;
+
+	// Disable checking
+	IsChecked = false;
 }
 
 float GridNode::GetTravelCost() const

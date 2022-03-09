@@ -49,11 +49,18 @@ void AShip::Tick(float DeltaTime)
 		{
 			// Update the position to the actual target
 			CurrentPosition = TargetPosition;
+			Level->StartNode = Path[0];
 			Path.RemoveAt(0);
 		}
 
 		// Update the actor location
 		SetActorLocation(CurrentPosition);
+	}
+
+	// Otherwise, if no path
+	else
+	{
+		GeneratePath = true;
 	}
 }
 

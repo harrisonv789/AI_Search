@@ -46,4 +46,7 @@ public:
 
 	// Reference of the object at the current location
 	AActor* ObjectAtLocation;
+
+	// Flag for whether or not he grid square has been checked by a search
+	bool IsChecked;
 };

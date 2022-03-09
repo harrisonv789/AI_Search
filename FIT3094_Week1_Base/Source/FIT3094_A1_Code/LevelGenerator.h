@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Gold.h"
+#include "Ship.h"
 #include "GridNode.h"
 #include "GameFramework/Actor.h"
 #include "LevelGenerator.generated.h"
@@ -32,27 +33,46 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	int MapSizeY;
 
+	// The current search count of the tree
+	int SearchCount;
+
+	// Whether the current path is calculated
+	bool IsPathCalculated;
+
+	// The start and end nodes of the search tree
+	GridNode* StartNode;
+	GridNode* GoalNode;
+
+	// A current reference to the ship that is in the path
+	AShip* Ship;
+
 	// The array of gold positions
 	UPROPERTY(BlueprintReadOnly)
 	TArray<FVector2D> GoldArray;
+
+	// The array of actors to be displayed on a path
+	UPROPERTY(BlueprintReadOnly)
+	TArray<AActor*> PathDisplayActors;
 
 	// Store an array of grids
 	GridNode* WorldArray[MAX_MAP_SIZE][MAX_MAP_SIZE];
 
 	// A list of gold actors
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 	TArray<AGold*> GoldActors;
 
 	// Actors to spawn in the world
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Meta=(ExposeOnSpawn = true), Category="Entities")
+	UPROPERTY(EditAnywhere, Category = "Entities")
+	TSubclassOf<AActor> PathDisplayBlueprint;
+	UPROPERTY(EditAnywhere, Category = "Entities")
 	TSubclassOf<AActor> DeepBlueprint;
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Meta=(ExposeOnSpawn = true), Category="Entities")
+	UPROPERTY(EditAnywhere, Category = "Entities")
 	TSubclassOf<AActor> LandBlueprint;
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Meta=(ExposeOnSpawn = true), Category="Entities")
+	UPROPERTY(EditAnywhere, Category = "Entities")
 	TSubclassOf<AActor> ShallowBlueprint;
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Meta=(ExposeOnSpawn = true), Category="Entities")
+	UPROPERTY(EditAnywhere, Category = "Entities")
 	TSubclassOf<AActor> GoldBlueprint;
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Meta=(ExposeOnSpawn = true), Category="Entities")
+	UPROPERTY(EditAnywhere, Category = "Entities")
 	TSubclassOf<AActor> ShipBlueprint;
 
 	// The camera from the world
@@ -93,7 +113,9 @@ protected:
 	 */
 	void SpawnNextGold ();
 
-public:	
+	
+public:
+	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -104,4 +126,33 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void GenerateWorldFromFile (TArray<FString> WorldArrayString);
 
+	/**
+	 * @brief Calculates the Depth First Expansion Strategy
+	 */
+	void CalculateDFS();
+
+	/**
+	 * @brief Calculates the ??? Strategy
+	 */
+	void CalculateBFS();
+
+	/**
+	 * @brief Renders the current path of the search algorithm
+	 */
+	void RenderPath();
+
+	/**
+	 * @brief Displays information to the screen of the current path chosen
+	 */
+	void DetailPath();
+
+	/**
+	 * @brief Resets the current path of the search algorithm
+	 */
+	void ResetPath();
+
+	/**
+	 * @brief Allows the ship to collect the gold at the end of the algorithm
+	 */
+	void CollectGold();
 };

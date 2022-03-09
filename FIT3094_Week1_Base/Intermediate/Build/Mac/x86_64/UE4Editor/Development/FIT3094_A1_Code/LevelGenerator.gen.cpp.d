@@ -2671,5 +2671,7 @@
   /Users/harrisonverrios/Documents/Uni/FIT3094\ (Artificial\ Life)/Assignments/UE4_AI_Assignment_1/FIT3094_Week1_Base/Source/FIT3094_A1_Code/LevelGenerator.h \
   /Users/harrisonverrios/Documents/Uni/FIT3094\ (Artificial\ Life)/Assignments/UE4_AI_Assignment_1/FIT3094_Week1_Base/Source/FIT3094_A1_Code/Gold.h \
   /Users/harrisonverrios/Documents/Uni/FIT3094\ (Artificial\ Life)/Assignments/UE4_AI_Assignment_1/FIT3094_Week1_Base/Intermediate/Build/Mac/x86_64/UE4Editor/Inc/FIT3094_A1_Code/Gold.generated.h \
+  /Users/harrisonverrios/Documents/Uni/FIT3094\ (Artificial\ Life)/Assignments/UE4_AI_Assignment_1/FIT3094_Week1_Base/Source/FIT3094_A1_Code/Ship.h \
   /Users/harrisonverrios/Documents/Uni/FIT3094\ (Artificial\ Life)/Assignments/UE4_AI_Assignment_1/FIT3094_Week1_Base/Source/FIT3094_A1_Code/GridNode.h \
+  /Users/harrisonverrios/Documents/Uni/FIT3094\ (Artificial\ Life)/Assignments/UE4_AI_Assignment_1/FIT3094_Week1_Base/Intermediate/Build/Mac/x86_64/UE4Editor/Inc/FIT3094_A1_Code/Ship.generated.h \
   /Users/harrisonverrios/Documents/Uni/FIT3094\ (Artificial\ Life)/Assignments/UE4_AI_Assignment_1/FIT3094_Week1_Base/Intermediate/Build/Mac/x86_64/UE4Editor/Inc/FIT3094_A1_Code/LevelGenerator.generated.h

@@ -18,177 +18,29 @@ void ALevelGenerator::BeginPlay()
 	Super::BeginPlay();
 }
 
-void ALevelGenerator::SpawnWorldActors(char Grid[255][255])
-{
-	// Get the current world
-	UWorld* World = GetWorld();
-
-	// Make sure all blueprints are connected
-	if (DeepBlueprint && ShallowBlueprint && LandBlueprint)
-	{
-		for (int X = 0; X < MapSizeX; X++)
-		{
-			for (int Y = 0; Y < MapSizeY; Y++)
-			{
-				const float XPos = X * GRID_SIZE_WORLD;
-				const float YPos = Y * GRID_SIZE_WORLD;
-
-				FVector Position(XPos, YPos, 0);
-
-				switch (Grid[X][Y])
-				{
-					case '.':
-					case 'G':
-						World->SpawnActor(DeepBlueprint, &Position, &FRotator::ZeroRotator);
-						break;
-					case '@':
-					case 'O':
-					case 'S':
-					case 'W':
-						World->SpawnActor(LandBlueprint, &Position, &FRotator::ZeroRotator);
-						break;
-					case 'T':
-						World->SpawnActor(ShallowBlueprint, &Position, &FRotator::ZeroRotator);
-						break;
-					default: break;
-				}
-			}
-		}
-	}
-
-	// Generate Initial Agent Positions
-	if (ShipBlueprint)
-	{
-		// Store defaults
-		const int XPos = 22;
-		const int YPos = 22;
-
-		// Get the position and spawn the ship
-		FVector Position(XPos * GRID_SIZE_WORLD, YPos * GRID_SIZE_WORLD, 20);
-		AShip* Ship = World->SpawnActor<AShip>(ShipBlueprint, Position, FRotator::ZeroRotator);
-
-		// Store the ship in the world array
-		WorldArray[XPos][YPos]->ObjectAtLocation = Ship;
-
-		// Adding the default path for testing
-		for (int i = 0; i < 10; i++)
-		{
-			Ship->Path.Add(WorldArray[22][23]);
-			Ship->Path.Add(WorldArray[22][24]);
-			Ship->Path.Add(WorldArray[21][24]);
-			Ship->Path.Add(WorldArray[21][23]);
-			Ship->Path.Add(WorldArray[20][23]);
-			Ship->Path.Add(WorldArray[20][22]);
-			Ship->Path.Add(WorldArray[21][22]);
-			Ship->Path.Add(WorldArray[21][21]);
-			Ship->Path.Add(WorldArray[22][21]);
-			Ship->Path.Add(WorldArray[22][22]);
-		}
-	}
-
-	// Generate Initial food positions
-	if (GoldBlueprint && GoldArray.Num() > 0)
-	{
-		const int XPos = GoldArray[0].X;
-		const int YPos = GoldArray[0].Y;
-
-		// Spawn the gold
-		const FVector Position(XPos * GRID_SIZE_WORLD, YPos * GRID_SIZE_WORLD, 20);
-		AGold* NewGold = World->SpawnActor<AGold>(GoldBlueprint, Position, FRotator::ZeroRotator);
-
-		// Add the gold to the array
-		WorldArray[XPos][YPos]->ObjectAtLocation = NewGold;
-		GoldActors.Add(NewGold);
-	}
-
-	// Set the static camera position
-	if (Camera)
-	{
-		FVector CameraPosition = Camera->GetActorLocation();
-
-		// Reset the position
-		CameraPosition.X = MapSizeX * 0.5 * GRID_SIZE_WORLD;
-		CameraPosition.Y = MapSizeY * 0.5 * GRID_SIZE_WORLD;
-
-		// Set the camera location
-		Camera->SetActorLocation(CameraPosition);
-	}
-}
-
-void ALevelGenerator::GenerateNodeGrid(char Grid[255][255])
-{
-	for (int X = 0; X < MapSizeX; X++)
-	{
-		for (int Y = 0; Y < MapSizeY; Y++)
-		{
-			// Set up the world array with a new grid item
-			WorldArray[X][Y] = new GridNode();
-			WorldArray[X][Y]->X = X;
-			WorldArray[X][Y]->Y = Y;
-
-			// Characters as defined from the map file
-			switch (Grid[X][Y])
-			{
-				case '.':
-				case 'G': WorldArray[X][Y]->GridType = GridNode::DeepWater; break;
-				case '@':
-				case 'O':
-				case 'S':
-				case 'W': WorldArray[X][Y]->GridType = GridNode::Land; break;
-				case 'T': WorldArray[X][Y]->GridType = GridNode::ShallowWater; break;
-				default: break;
-			}
-		}
-	}
-}
-
-void ALevelGenerator::ResetAllNodes()
-{
-	for (int X = 0; X < MapSizeX; X++)
-	{
-		for (int Y = 0; Y < MapSizeY; Y++)
-		{
-			// Reset the search variables
-			WorldArray[X][Y]->F = 0;
-			WorldArray[X][Y]->G = 0;
-			WorldArray[X][Y]->H = 0;
-			WorldArray[X][Y]->Parent = nullptr;
-		}
-	}
-}
-
-float ALevelGenerator::CalculateDistanceBetweenNodes(GridNode* first, GridNode* second)
-{
-	FVector distToTarget = FVector(second->X - first->X, second->Y - first->Y, 0);
-	return distToTarget.Size();
-}
-
-void ALevelGenerator::SpawnNextGold()
-{
-	// Get the current world and remove the firs element from the gold
-	UWorld* World = GetWorld();
-	GoldArray.RemoveAt(0);
-
-	// Generate Initial Food Positions
-	if (GoldBlueprint && GoldArray.Num() > 0)
-	{
-		int XPos = GoldArray[0].X;
-		int YPos = GoldArray[0].Y;
-
-		// Get the position of the gold
-		FVector Position(XPos * GRID_SIZE_WORLD, YPos * GRID_SIZE_WORLD, 20);
-		AGold* NewGold = World->SpawnActor<AGold>(GoldBlueprint, Position, FRotator::ZeroRotator);
-
-		// Store the gold position
-		WorldArray[XPos][YPos]->ObjectAtLocation = NewGold;
-		GoldActors.Add(NewGold);
-	}
-}
-
 // Called every frame
 void ALevelGenerator::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	// Check if the Ship requires a new path to be generated
+	if (Ship && Ship->GeneratePath && GoldActors.Num() > 0) {
+
+		// Update the new path
+		CollectGold();
+		ResetPath();
+		SpawnNextGold();
+		CalculateDFS();
+		DetailPath();
+	}
+}
+
+void ALevelGenerator::CollectGold()
+{
+	// Remove the current gold
+	GoldArray.RemoveAt(0);
+	GoldActors[0]->Destroy();
+	GoldActors.RemoveAt(0);
 }
 
 void ALevelGenerator::GenerateWorldFromFile(TArray<FString> WorldArrayString)
@@ -238,5 +90,211 @@ void ALevelGenerator::GenerateWorldFromFile(TArray<FString> WorldArrayString)
 	// Generates the files
 	GenerateNodeGrid(CharMapArray);
 	SpawnWorldActors(CharMapArray);
-	
+
+	// Run the first search tree
+	CalculateDFS();
+	DetailPath();
+}
+
+void ALevelGenerator::SpawnWorldActors(char Grid[255][255])
+{
+	// Get the current world
+	UWorld* World = GetWorld();
+
+	// Make sure all blueprints are connected
+	if (DeepBlueprint && ShallowBlueprint && LandBlueprint)
+	{
+		for (int X = 0; X < MapSizeX; X++)
+		{
+			for (int Y = 0; Y < MapSizeY; Y++)
+			{
+				const float XPos = X * GRID_SIZE_WORLD;
+				const float YPos = Y * GRID_SIZE_WORLD;
+
+				FVector Position(XPos, YPos, 0);
+
+				switch (Grid[X][Y])
+				{
+					case '.':
+					case 'G':
+						World->SpawnActor(DeepBlueprint, &Position, &FRotator::ZeroRotator);
+						break;
+					case '@':
+					case 'O':
+					case 'S':
+					case 'W':
+						World->SpawnActor(LandBlueprint, &Position, &FRotator::ZeroRotator);
+						break;
+					case 'T':
+						World->SpawnActor(ShallowBlueprint, &Position, &FRotator::ZeroRotator);
+						break;
+					default: break;
+				}
+			}
+		}
+	}
+
+	// Generate Initial Agent Positions
+	if (ShipBlueprint)
+	{
+		// Store defaults
+		const int XPos = 22;
+		const int YPos = 22;
+
+		// Get the position and spawn the ship
+		const FVector Position(XPos * GRID_SIZE_WORLD, YPos * GRID_SIZE_WORLD, 20);
+		Ship = World->SpawnActor<AShip>(ShipBlueprint, Position, FRotator::ZeroRotator);
+		Ship->Level = this;
+
+		// Store the ship in the world array
+		WorldArray[XPos][YPos]->ObjectAtLocation = Ship;
+		StartNode = WorldArray[XPos][YPos];
+	}
+
+	// Generate Initial food positions
+	if (GoldBlueprint && GoldArray.Num() > 0)
+	{
+		SpawnNextGold();
+	}
+
+	// Set the static camera position
+	if (Camera)
+	{
+		FVector CameraPosition = Camera->GetActorLocation();
+
+		// Reset the position
+		CameraPosition.X = MapSizeX * 0.5 * GRID_SIZE_WORLD;
+		CameraPosition.Y = MapSizeY * 0.5 * GRID_SIZE_WORLD;
+
+		// Set the camera location
+		Camera->SetActorLocation(CameraPosition);
+	}
+}
+
+void ALevelGenerator::SpawnNextGold()
+{
+	// Get the current world and remove the firs element from the gold
+	UWorld* World = GetWorld();
+
+	// Generate Initial Food Positions
+	if (GoldBlueprint && GoldArray.Num() > 0)
+	{
+		int XPos = GoldArray[0].X;
+		int YPos = GoldArray[0].Y;
+
+		// Get the position of the gold
+		const FVector Position(XPos * GRID_SIZE_WORLD, YPos * GRID_SIZE_WORLD, 20);
+		AGold* NewGold = World->SpawnActor<AGold>(GoldBlueprint, Position, FRotator::ZeroRotator);
+
+		// Store the gold position
+		WorldArray[XPos][YPos]->ObjectAtLocation = NewGold;
+		GoalNode = WorldArray[XPos][YPos];
+		GoldActors.Add(NewGold);
+	}
+}
+
+void ALevelGenerator::GenerateNodeGrid(char Grid[255][255])
+{
+	for (int X = 0; X < MapSizeX; X++)
+	{
+		for (int Y = 0; Y < MapSizeY; Y++)
+		{
+			// Set up the world array with a new grid item
+			WorldArray[X][Y] = new GridNode();
+			WorldArray[X][Y]->X = X;
+			WorldArray[X][Y]->Y = Y;
+
+			// Characters as defined from the map file
+			switch (Grid[X][Y])
+			{
+			case '.':
+			case 'G': WorldArray[X][Y]->GridType = GridNode::DeepWater; break;
+			case '@':
+			case 'O':
+			case 'S':
+			case 'W': WorldArray[X][Y]->GridType = GridNode::Land; break;
+			case 'T': WorldArray[X][Y]->GridType = GridNode::ShallowWater; break;
+			default: break;
+			}
+		}
+	}
+}
+
+void ALevelGenerator::ResetAllNodes()
+{
+	for (int X = 0; X < MapSizeX; X++)
+	{
+		for (int Y = 0; Y < MapSizeY; Y++)
+		{
+			// Reset the search variables
+			WorldArray[X][Y]->F = 0;
+			WorldArray[X][Y]->G = 0;
+			WorldArray[X][Y]->H = 0;
+			WorldArray[X][Y]->Parent = nullptr;
+			WorldArray[X][Y]->IsChecked = false;
+		}
+	}
+}
+
+float ALevelGenerator::CalculateDistanceBetweenNodes(GridNode* first, GridNode* second)
+{
+	const FVector distToTarget = FVector(second->X - first->X, second->Y - first->Y, 0);
+	return distToTarget.Size();
+}
+
+void ALevelGenerator::DetailPath()
+{
+	// Onscreen Debug (Don't forget the include!)
+	GEngine->AddOnScreenDebugMessage(-1, 12.f, FColor::White, FString::Printf(TEXT("Total Cells searched: %d with a path length of: %d and a distance of: %f"), SearchCount, Ship->Path.Num(), CalculateDistanceBetweenNodes(StartNode, GoalNode)));
+	GEngine->AddOnScreenDebugMessage(-1, 12.f, FColor::White, FString::Printf(TEXT("The difference between the current implemented path and the direct flight path is: %f"), Ship->Path.Num() / CalculateDistanceBetweenNodes(StartNode, GoalNode)));
+    
+	// Log Debug message (Accessed through Window->Developer Tools->Output Log)
+	UE_LOG(LogTemp, Warning, TEXT("Total Cells searched: %d with a path length of: %d and a distance of: %f"), SearchCount, Ship->Path.Num(), CalculateDistanceBetweenNodes(StartNode, GoalNode));
+	UE_LOG(LogTemp, Warning, TEXT("The difference between the current implemented path and the direct flight path is: %f"), Ship->Path.Num() / CalculateDistanceBetweenNodes(StartNode, GoalNode));
+}
+
+void ALevelGenerator::CalculateDFS()
+{
+}
+
+void ALevelGenerator::CalculateBFS()
+{
+}
+
+void ALevelGenerator::RenderPath()
+{
+	// Get the current world and final goal node
+	UWorld* World = GetWorld();
+	GridNode* CurrentNode = GoalNode;
+
+	// Create a path render
+	while (CurrentNode->Parent != nullptr)
+	{
+		// Spawn the new path node
+		const FVector Position(CurrentNode->X * GRID_SIZE_WORLD, CurrentNode->Y * GRID_SIZE_WORLD, 20);
+		AActor* PDActor = World->SpawnActor<AActor>(PathDisplayBlueprint, Position, FRotator::ZeroRotator);
+		PathDisplayActors.Add(PDActor);
+
+		// Move the ship to the next node
+		Ship->Path.EmplaceAt(0, WorldArray[CurrentNode->X][CurrentNode->Y]);
+		CurrentNode = CurrentNode->Parent;
+	}
+}
+
+void ALevelGenerator::ResetPath()
+{
+	// Reset the nodes for the search
+	IsPathCalculated = false;
+	SearchCount = 0;
+	ResetAllNodes();
+
+	// Update the path of the actors
+	for (int i = 0; i < PathDisplayActors.Num(); i++)
+	{
+		PathDisplayActors[i]->Destroy();
+	}
+	PathDisplayActors.Empty();
+
+	// Reset the ships path
+	Ship->Path.Empty();
 }
