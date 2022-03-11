@@ -30,7 +30,8 @@ void ALevelGenerator::Tick(float DeltaTime)
 		CollectGold();
 		ResetPath();
 		SpawnNextGold();
-		CalculateDFS();
+		//CalculateDFS();
+		CalculateBFS();
 		DetailPath();
 	}
 }
@@ -45,54 +46,53 @@ void ALevelGenerator::CollectGold()
 
 void ALevelGenerator::GenerateWorldFromFile(TArray<FString> WorldArrayString)
 {
-	// If the world is empty, return
-	if (WorldArrayString.Num() == 0)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, " World Array is Empty!");
-		return;
-	}
+	// If empty array exit immediately something is horribly wrong
+    if(WorldArrayString.Num() == 0)
+    {
+    	UE_LOG(LogTemp, Warning, TEXT("World Array is empty!"));
+    	return;
+    }
 
-	// Second line is the height, aka X value
-	FString Height = WorldArrayString[1];
-	Height.RemoveFromStart("height ");
-	MapSizeX = FCString::Atoi(*Height);
-	UE_LOG(LogTemp, Warning, TEXT("Height: %d"), MapSizeX);
-	
-	// Third line is the height, aka X value
+    // Second line is Height (aka Y value)
+    FString Height = WorldArrayString[1];
+    Height.RemoveFromStart("Height ");
+    MapSizeY = FCString::Atoi(*Height);
+    UE_LOG(LogTemp, Warning, TEXT("Height: %d"), MapSizeY);
+
+    // Third line is Width (aka X value)
     FString Width = WorldArrayString[2];
     Width.RemoveFromStart("width ");
-    MapSizeY = FCString::Atoi(*Width);
-    UE_LOG(LogTemp, Warning, TEXT("Width: %d"), MapSizeY);
+    MapSizeX = FCString::Atoi(*Width);
+    UE_LOG(LogTemp, Warning, TEXT("Width: %d"), MapSizeX);
 
-	char CharMapArray[MAX_MAP_SIZE][MAX_MAP_SIZE];
+    char CharMapArray[MAX_MAP_SIZE][MAX_MAP_SIZE];
+    
+    // Read through the Map section for create the CharMapArray
+    for (int LineNum = 4; LineNum < MapSizeY + 4; LineNum++)
+    {
+    	for (int CharNum = 0; CharNum < WorldArrayString[LineNum].Len(); CharNum++)
+    	{
+    		CharMapArray[LineNum-4][CharNum] = WorldArrayString[LineNum][CharNum];
+    	}
+    }
 
-	// Read through the Map section for create the CharMapArray
-	for (int LineNum = 4; LineNum < MapSizeX + 4; LineNum++)
-	{
-		for (int CharNum = 0; CharNum < WorldArrayString[LineNum].Len(); CharNum++)
-		{
-			CharMapArray[LineNum - 4][CharNum] = WorldArrayString[LineNum][CharNum];
-		}
-	}
+    // Read in the Gold positions
+    for (int LineNum = 4 + MapSizeY; LineNum < WorldArrayString.Num(); LineNum++)
+    {
+    	FString GoldX, GoldY;
+    	WorldArrayString[LineNum].Split(",", &GoldY, &GoldX);
+    	UE_LOG(LogTemp, Warning, TEXT("GoldX: %s"), *GoldX);
+    	UE_LOG(LogTemp, Warning, TEXT("GoldY: %s"), *GoldY);
 
-	// Read in the food positions
-	for (int LineNum = 4 + MapSizeX; LineNum < WorldArrayString.Num(); LineNum++)
-	{
-		FString GoldX, GoldY;
-		WorldArrayString[LineNum].Split(",", &GoldX, &GoldY);
-		UE_LOG(LogTemp, Warning, TEXT("GoldX: %s"), *GoldX);
-		UE_LOG(LogTemp, Warning, TEXT("GoldY: %s"), *GoldY);
+    	GoldArray.Add(FVector2D(FCString::Atof(*GoldX), FCString::Atof(*GoldY)));
 
-		// Add an item into the Gold
-		GoldArray.Add(FVector2D(FCString::Atof(*GoldX), FCString::Atof(*GoldY)));
-	}
+    }
 
 	// Generates the files
 	GenerateNodeGrid(CharMapArray);
 	SpawnWorldActors(CharMapArray);
-
-	// Run the first search tree
-	CalculateDFS();
+	//CalculateDFS();
+	CalculateBFS();
 	DetailPath();
 }
 
@@ -135,21 +135,18 @@ void ALevelGenerator::SpawnWorldActors(char Grid[255][255])
 	}
 
 	// Generate Initial Agent Positions
-	if (ShipBlueprint)
-	{
-		// Store defaults
-		const int XPos = 22;
-		const int YPos = 22;
+    if(ShipBlueprint)
+    {
+    	int XPos = 16; //Default Intial X Position
+    	int YPos = 23; //Default Intial Y Position
 
-		// Get the position and spawn the ship
-		const FVector Position(XPos * GRID_SIZE_WORLD, YPos * GRID_SIZE_WORLD, 20);
-		Ship = World->SpawnActor<AShip>(ShipBlueprint, Position, FRotator::ZeroRotator);
-		Ship->Level = this;
+    	FVector Position(XPos * GRID_SIZE_WORLD, YPos * GRID_SIZE_WORLD, 20);
+    	Ship = World->SpawnActor<AShip>(ShipBlueprint, Position, FRotator::ZeroRotator);
+    	Ship->Level = this;
 
-		// Store the ship in the world array
-		WorldArray[XPos][YPos]->ObjectAtLocation = Ship;
-		StartNode = WorldArray[XPos][YPos];
-	}
+    	WorldArray[XPos][YPos]->ObjectAtLocation = Ship;
+    	StartNode = WorldArray[XPos][YPos];
+    }
 
 	// Generate Initial food positions
 	if (GoldBlueprint && GoldArray.Num() > 0)
@@ -255,10 +252,178 @@ void ALevelGenerator::DetailPath()
 
 void ALevelGenerator::CalculateDFS()
 {
+	// Create the starting nodes
+	GridNode* currentNode = nullptr;
+	GridNode* tempNode = nullptr;
+	bool isGoalFound = false;
+
+	// Create a list of nodes
+	TArray<GridNode*> nodesToVisit;
+	StartNode->IsChecked = true;
+	nodesToVisit.Add(StartNode);
+
+	// Loop through all the required nodes
+	while (nodesToVisit.Num() >= 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Count: %d"), SearchCount);
+		// Get the next node and remove it from the list
+		SearchCount++;
+		currentNode = nodesToVisit.Last();
+		nodesToVisit.RemoveAt(nodesToVisit.Num() - 1);
+
+		// Check if the goal is reached
+		if (currentNode == GoalNode)
+		{
+			isGoalFound = true;
+			break;
+		}
+
+		// Check the left neighbour
+		if (currentNode->Y - 1 >= 0)
+		{
+			// Get the Left neighbour from the list
+			tempNode = WorldArray[currentNode->X][currentNode->Y - 1];
+
+			// Check to make sure the node hasn't been visited AND is not closed (Land)
+			if (tempNode->GridType != GridNode::Land && !tempNode->IsChecked)
+			{
+				tempNode->IsChecked = true;
+				tempNode->Parent = currentNode;
+				nodesToVisit.Add(tempNode);
+			}
+		}
+
+		// Check the top neighbour
+		if (currentNode->X + 1 < MapSizeX - 1)
+		{
+			tempNode = WorldArray[currentNode->X + 1][currentNode->Y];
+			if (tempNode->GridType != GridNode::Land && !tempNode->IsChecked)
+			{
+				tempNode->IsChecked = true;
+				tempNode->Parent = currentNode;
+				nodesToVisit.Add(tempNode);
+			}
+		}
+
+		// Check the right neighbour
+		if (currentNode->Y + 1 < MapSizeX - 1)
+		{
+			tempNode = WorldArray[currentNode->X][currentNode->Y + 1];
+			if (tempNode->GridType != GridNode::Land && !tempNode->IsChecked)
+			{
+				tempNode->IsChecked = true;
+				tempNode->Parent = currentNode;
+				nodesToVisit.Add(tempNode);
+			}
+		}
+
+		// Check the bottom neighbour
+		if (currentNode->X - 1 > 0)
+		{
+			tempNode = WorldArray[currentNode->X - 1][currentNode->Y];
+			if (tempNode->GridType != GridNode::Land && !tempNode->IsChecked)
+			{
+				tempNode->IsChecked = true;
+				tempNode->Parent = currentNode;
+				nodesToVisit.Add(tempNode);
+			}
+		}
+	}
+
+	// If the final goal is reached
+	if (isGoalFound)
+	{
+		RenderPath();
+		Ship->GeneratePath = false;
+	}
 }
 
 void ALevelGenerator::CalculateBFS()
 {
+	// Create the starting nodes
+	GridNode* currentNode = nullptr;
+	GridNode* tempNode = nullptr;
+	bool isGoalFound = false;
+
+	// Create a list of nodes
+	TArray<GridNode*> nodesToVisit;
+	StartNode->IsChecked = true;
+	nodesToVisit.Add(StartNode);
+
+	// Loop through all the required nodes
+	while (nodesToVisit.Num() >= 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Count: %d"), SearchCount);
+		// Get the next node and remove it from the list
+		SearchCount++;
+		currentNode = nodesToVisit[0];
+		nodesToVisit.RemoveAt(0); // ONLY THIS IS DIFFERENT
+
+		// Check if the goal is reached
+		if (currentNode == GoalNode)
+		{
+			isGoalFound = true;
+			break;
+		}
+
+		// Check the left neighbour
+		if (currentNode->Y - 1 >= 0)
+		{
+			// Get the Left neighbour from the list
+			tempNode = WorldArray[currentNode->X][currentNode->Y - 1];
+
+			// Check to make sure the node hasn't been visited AND is not closed (Land)
+			if (tempNode->GridType != GridNode::Land && !tempNode->IsChecked)
+			{
+				tempNode->IsChecked = true;
+				tempNode->Parent = currentNode;
+				nodesToVisit.Add(tempNode);
+			}
+		}
+
+		// Check the top neighbour
+		if (currentNode->X + 1 < MapSizeX - 1)
+		{
+			tempNode = WorldArray[currentNode->X + 1][currentNode->Y];
+			if (tempNode->GridType != GridNode::Land && !tempNode->IsChecked)
+			{
+				tempNode->IsChecked = true;
+				tempNode->Parent = currentNode;
+				nodesToVisit.Add(tempNode);
+			}
+		}
+
+		// Check the right neighbour
+		if (currentNode->Y + 1 < MapSizeX - 1)
+		{
+			tempNode = WorldArray[currentNode->X][currentNode->Y + 1];
+			if (tempNode->GridType != GridNode::Land && !tempNode->IsChecked)
+			{
+				tempNode->IsChecked = true;
+				tempNode->Parent = currentNode;
+				nodesToVisit.Add(tempNode);
+			}
+		}
+
+		// Check the bottom neighbour
+		if (currentNode->X - 1 > 0)
+		{
+			tempNode = WorldArray[currentNode->X - 1][currentNode->Y];
+			if (tempNode->GridType != GridNode::Land && !tempNode->IsChecked)
+			{
+				tempNode->IsChecked = true;
+				tempNode->Parent = currentNode;
+				nodesToVisit.Add(tempNode);
+			}
+		}
+	}
+
+	// If the final goal is reached
+	if (isGoalFound)
+	{
+		RenderPath();
+		Ship->GeneratePath = false;
+	}
 }
 
 void ALevelGenerator::RenderPath()

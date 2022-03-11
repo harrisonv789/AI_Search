@@ -6,7 +6,8 @@
 GridNode::GridNode()
 {
 	// Setup the variables
-	X = Y = 0;
+	X = 0;
+	Y = 0;
 	G = H = F = 0.0;
 
 	// Setup the cell types
