@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "A1_Search",
+			"Path": "/Users/harrisonverrios/Documents/Uni/FIT3094 (Artificial Life)/Assignments/UE4_AI_Assignment_1/A1_Search/Source/A1_Search.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "A1_SearchEditor",
+			"Path": "/Users/harrisonverrios/Documents/Uni/FIT3094 (Artificial Life)/Assignments/UE4_AI_Assignment_1/A1_Search/Source/A1_SearchEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}
