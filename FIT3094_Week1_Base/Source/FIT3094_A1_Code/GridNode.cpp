@@ -26,9 +26,14 @@ float GridNode::GetTravelCost() const
 	{
 		case Land: return 999999;
 		case DeepWater: return 1;
-		case ShallowWater: return 1;
+		case ShallowWater: return 2;
 	}
 
 	// Missing a type
 	return 999999;
+}
+
+void GridNode::CalculateF(float w)
+{
+	F = G + w * H;
 }

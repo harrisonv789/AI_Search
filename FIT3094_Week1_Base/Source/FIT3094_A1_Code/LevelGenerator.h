@@ -9,6 +9,15 @@
 #include "GameFramework/Actor.h"
 #include "LevelGenerator.generated.h"
 
+UENUM(Blueprintable)
+enum ESearchType
+{
+	DFS,
+	BFS,
+	DIJKSTRA,
+	ASTAR
+};
+
 UCLASS()
 class FIT3094_A1_CODE_API ALevelGenerator : public AActor
 {
@@ -77,7 +86,11 @@ public:
 
 	// The camera from the world
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Meta=(ExposeOnSpawn = true), Category="Entities")
-	AActor* Camera; 
+	AActor* Camera;
+
+	// The search type to use
+	UPROPERTY(EditAnywhere, Category = "Search")
+	TEnumAsByte<ESearchType> SearchType;
 
 protected:
 	// Called when the game starts or when spawned
@@ -113,6 +126,14 @@ protected:
 	 */
 	void SpawnNextGold ();
 
+	/**
+	 * @brief Estimates the cost between two nodes
+	 * @param first - The first grid node
+	 * @param second - The second grid node
+	 * @return The distance between two nodes
+	 */
+	float EstimateCost (GridNode* first, GridNode* second);
+
 	
 public:
 	
@@ -132,9 +153,20 @@ public:
 	void CalculateDFS();
 
 	/**
-	 * @brief Calculates the ??? Strategy
+	 * @brief Calculates the Breadth First Search Strategy
 	 */
 	void CalculateBFS();
+
+	/*
+	 * @brief Calculates the Uniform Cost Search (Dijkstra) strategy
+	*/
+	void CalculateDijkstra();
+
+	/**
+	 * @brief Calculates the A* search strategy
+	 * @param weight - The Weight of the algorithm
+	 */
+	void CalculateAStar(float weight = 1.0);
 
 	/**
 	 * @brief Renders the current path of the search algorithm

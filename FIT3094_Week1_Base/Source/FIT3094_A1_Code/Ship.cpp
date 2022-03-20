@@ -10,7 +10,7 @@ AShip::AShip()
 	PrimaryActorTick.bCanEverTick = true;
 
 	// Set up some of the data
-	MoveSpeed = 100;
+	MoveSpeed = 500;
 	Tolerance = 5;
 }
 

@@ -13,18 +13,18 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define FIT3094_A1_CODE_LevelGenerator_generated_h
 
-#define FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_15_SPARSE_DATA
-#define FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_15_RPC_WRAPPERS \
+#define FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_24_SPARSE_DATA
+#define FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_24_RPC_WRAPPERS \
  \
 	DECLARE_FUNCTION(execGenerateWorldFromFile);
 
 
-#define FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_24_RPC_WRAPPERS_NO_PURE_DECLS \
  \
 	DECLARE_FUNCTION(execGenerateWorldFromFile);
 
 
-#define FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_15_INCLASS_NO_PURE_DECLS \
+#define FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_24_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesALevelGenerator(); \
 	friend struct Z_Construct_UClass_ALevelGenerator_Statics; \
@@ -33,7 +33,7 @@ public: \
 	DECLARE_SERIALIZER(ALevelGenerator)
 
 
-#define FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_15_INCLASS \
+#define FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_24_INCLASS \
 private: \
 	static void StaticRegisterNativesALevelGenerator(); \
 	friend struct Z_Construct_UClass_ALevelGenerator_Statics; \
@@ -42,7 +42,7 @@ public: \
 	DECLARE_SERIALIZER(ALevelGenerator)
 
 
-#define FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_15_STANDARD_CONSTRUCTORS \
+#define FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_24_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API ALevelGenerator(const FObjectInitializer& ObjectInitializer); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(ALevelGenerator) \
@@ -55,7 +55,7 @@ private: \
 public:
 
 
-#define FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_15_ENHANCED_CONSTRUCTORS \
+#define FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_24_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	NO_API ALevelGenerator(ALevelGenerator&&); \
@@ -66,28 +66,28 @@ public: \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(ALevelGenerator)
 
 
-#define FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_15_PRIVATE_PROPERTY_OFFSET
-#define FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_12_PROLOG
-#define FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_15_GENERATED_BODY_LEGACY \
+#define FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_24_PRIVATE_PROPERTY_OFFSET
+#define FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_21_PROLOG
+#define FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_24_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_15_PRIVATE_PROPERTY_OFFSET \
-	FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_15_SPARSE_DATA \
-	FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_15_RPC_WRAPPERS \
-	FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_15_INCLASS \
-	FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_15_STANDARD_CONSTRUCTORS \
+	FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_24_PRIVATE_PROPERTY_OFFSET \
+	FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_24_SPARSE_DATA \
+	FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_24_RPC_WRAPPERS \
+	FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_24_INCLASS \
+	FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_24_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_15_GENERATED_BODY \
+#define FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_24_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_15_PRIVATE_PROPERTY_OFFSET \
-	FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_15_SPARSE_DATA \
-	FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
-	FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_15_INCLASS_NO_PURE_DECLS \
-	FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_15_ENHANCED_CONSTRUCTORS \
+	FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_24_PRIVATE_PROPERTY_OFFSET \
+	FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_24_SPARSE_DATA \
+	FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_24_RPC_WRAPPERS_NO_PURE_DECLS \
+	FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_24_INCLASS_NO_PURE_DECLS \
+	FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h_24_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -98,4 +98,9 @@ template<> FIT3094_A1_CODE_API UClass* StaticClass<class ALevelGenerator>();
 #define CURRENT_FILE_ID FIT3094_Week1_Base_Source_FIT3094_A1_Code_LevelGenerator_h
 
 
+#define FOREACH_ENUM_ESEARCHTYPE(op) \
+	op(DFS) \
+	op(BFS) \
+	op(DIJKSTRA) \
+	op(ASTAR) 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

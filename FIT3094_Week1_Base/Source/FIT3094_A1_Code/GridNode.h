@@ -29,6 +29,11 @@ public:
 	 */
 	float GetTravelCost () const;
 
+	/**
+	 * @brief Calculates the F value of the algorithm with some weighting
+	 */
+	void CalculateF (float w = 1.0);
+
 	// Position of the Grid
 	int X;
 	int Y;

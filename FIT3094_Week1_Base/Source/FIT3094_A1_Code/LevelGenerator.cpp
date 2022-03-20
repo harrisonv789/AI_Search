@@ -30,8 +30,17 @@ void ALevelGenerator::Tick(float DeltaTime)
 		CollectGold();
 		ResetPath();
 		SpawnNextGold();
-		//CalculateDFS();
-		CalculateBFS();
+
+		// Load the search based on the search type
+		switch (SearchType)
+		{
+			case DFS: CalculateDFS(); break;
+			case BFS: CalculateBFS(); break;
+			case DIJKSTRA: CalculateDijkstra(); break;
+			case ASTAR: CalculateAStar(); break;
+			default: break;
+		}
+		
 		DetailPath();
 	}
 }
@@ -91,8 +100,18 @@ void ALevelGenerator::GenerateWorldFromFile(TArray<FString> WorldArrayString)
 	// Generates the files
 	GenerateNodeGrid(CharMapArray);
 	SpawnWorldActors(CharMapArray);
-	//CalculateDFS();
-	CalculateBFS();
+
+	// Load the search based on the search type
+	switch (SearchType)
+	{
+		case DFS: CalculateDFS(); break;
+		case BFS: CalculateBFS(); break;
+		case DIJKSTRA: CalculateDijkstra(); break;
+		case ASTAR: CalculateAStar(); break;
+		default: break;
+	}
+
+	// Draw the path
 	DetailPath();
 }
 
@@ -188,6 +207,12 @@ void ALevelGenerator::SpawnNextGold()
 		GoalNode = WorldArray[XPos][YPos];
 		GoldActors.Add(NewGold);
 	}
+}
+
+float ALevelGenerator::EstimateCost(GridNode* first, GridNode* second)
+{
+	// TODO For now just calculate the distance between the two as the heuristic
+	return CalculateDistanceBetweenNodes(first, second);
 }
 
 void ALevelGenerator::GenerateNodeGrid(char Grid[255][255])
@@ -394,7 +419,7 @@ void ALevelGenerator::CalculateBFS()
 		}
 
 		// Check the right neighbour
-		if (currentNode->Y + 1 < MapSizeX - 1)
+		if (currentNode->Y + 1 < MapSizeY - 1)
 		{
 			tempNode = WorldArray[currentNode->X][currentNode->Y + 1];
 			if (tempNode->GridType != GridNode::Land && !tempNode->IsChecked)
@@ -424,6 +449,107 @@ void ALevelGenerator::CalculateBFS()
 		RenderPath();
 		Ship->GeneratePath = false;
 	}
+}
+
+void ALevelGenerator::CalculateDijkstra()
+{
+	// Remove the H factor from the algorithm
+	CalculateAStar(0.0);
+}
+
+void ALevelGenerator::CalculateAStar(float weight)
+{
+	// Define the list of nodes that have been visited or should be visited
+	TArray<GridNode*> openList;
+	TArray<GridNode*> closedList;
+
+	// Store a reference to the current node
+	GridNode* currentNode;
+
+	// Define a start node's cost value
+	StartNode->G = 0;
+	StartNode->H = EstimateCost(StartNode, GoalNode);
+	StartNode->CalculateF(weight);
+
+	// Adds the starting node to the open list
+	openList.Add(StartNode);
+
+	// Loop while the open list is valid
+	while (openList.Num() > 0) {
+	    // Find the node in the open list with the smallest F value
+		{
+			int smallFIndex = 0;
+			float smallFValue = 999999;
+
+			// Loop through each element in the list
+			for (int i = 0; i < openList.Num(); i++) {
+				if (openList[i]->F < smallFValue)
+				{
+					smallFValue = openList[i]->F;
+					smallFIndex = i;
+				}
+			}
+
+			// Get and store the current node as the smallest value in the open list
+			currentNode = openList[smallFIndex];
+			openList.RemoveAt(smallFIndex);
+			closedList.Add(currentNode);
+		}
+
+		// Check if the current node is the goal
+		if (currentNode == GoalNode)
+			break; // TODO return path from start node to goal node
+
+		// Create a list of accessible nodes
+		TArray<GridNode*> accessibleNodes = {};
+		if (currentNode->X + 1 < MapSizeX - 1)
+			accessibleNodes.Add(WorldArray[currentNode->X + 1][currentNode->Y]);
+		if (currentNode->X - 1 > 0) // TODO check if this works with >= 0
+			accessibleNodes.Add(WorldArray[currentNode->X - 1][currentNode->Y]);
+		if (currentNode->Y + 1 < MapSizeY - 1)
+			accessibleNodes.Add(WorldArray[currentNode->X][currentNode->Y + 1]);
+		if (currentNode->Y - 1 > 0) // TODO check if this works with >= 0
+			accessibleNodes.Add(WorldArray[currentNode->X][currentNode->Y - 1]);
+		
+		// Loop through each node accessible from the current node
+		for (GridNode* nextNode : accessibleNodes)
+		{
+			// Ensure the next node isn't on the closed list
+			if (closedList.Contains(nextNode))
+				continue;
+			
+			// Calculate the heuristic g value
+			float possibleG = currentNode->G + nextNode->GetTravelCost(); // TODO check this is the correct method
+			bool possibleGIsBetter = false;
+
+			// Check if the next node is not in the open list
+			if (!openList.Contains(nextNode))
+			{
+				// Find the heuristic value of the node
+				openList.Add(nextNode);
+				nextNode->H = EstimateCost(nextNode, GoalNode);
+				possibleGIsBetter = true;
+			}
+
+			// Check if the possible G is better than the current G
+			else if (possibleG < nextNode->G)
+			{
+				possibleGIsBetter = true;
+			}
+
+			// If there is a possible better G value
+			if (possibleGIsBetter)
+			{
+				nextNode->Parent = currentNode;
+				nextNode->G = possibleG;
+				nextNode->CalculateF(weight);
+			}
+		}
+	}
+
+	// TODO check if the path is valid
+	RenderPath();
+	Ship->GeneratePath = false;
 }
 
 void ALevelGenerator::RenderPath()
