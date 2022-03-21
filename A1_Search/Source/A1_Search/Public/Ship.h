@@ -9,7 +9,7 @@
 #include "Ship.generated.h"
 
 // Resolves a circular dependency with forward declaration
-class ALevelGenerator;
+class APathManager;
 
 /*
  * Class for the ship agent to travel the sea
@@ -37,7 +37,8 @@ class A1_SEARCH_API AShip : public AActor
     bool GeneratePath = true;
 
     // A reference to the current level
-    ALevelGenerator* Level;
+	UPROPERTY()
+    APathManager* PathManager;
 
 	
 	/**************************************************************/

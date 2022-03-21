@@ -13,18 +13,18 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define A1_SEARCH_LevelGenerator_generated_h
 
-#define A1_Search_Source_A1_Search_Public_LevelGenerator_h_17_SPARSE_DATA
-#define A1_Search_Source_A1_Search_Public_LevelGenerator_h_17_RPC_WRAPPERS \
+#define A1_Search_Source_A1_Search_Public_LevelGenerator_h_20_SPARSE_DATA
+#define A1_Search_Source_A1_Search_Public_LevelGenerator_h_20_RPC_WRAPPERS \
  \
 	DECLARE_FUNCTION(execGenerateWorldFromFile);
 
 
-#define A1_Search_Source_A1_Search_Public_LevelGenerator_h_17_RPC_WRAPPERS_NO_PURE_DECLS \
+#define A1_Search_Source_A1_Search_Public_LevelGenerator_h_20_RPC_WRAPPERS_NO_PURE_DECLS \
  \
 	DECLARE_FUNCTION(execGenerateWorldFromFile);
 
 
-#define A1_Search_Source_A1_Search_Public_LevelGenerator_h_17_INCLASS_NO_PURE_DECLS \
+#define A1_Search_Source_A1_Search_Public_LevelGenerator_h_20_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesALevelGenerator(); \
 	friend struct Z_Construct_UClass_ALevelGenerator_Statics; \
@@ -33,7 +33,7 @@ public: \
 	DECLARE_SERIALIZER(ALevelGenerator)
 
 
-#define A1_Search_Source_A1_Search_Public_LevelGenerator_h_17_INCLASS \
+#define A1_Search_Source_A1_Search_Public_LevelGenerator_h_20_INCLASS \
 private: \
 	static void StaticRegisterNativesALevelGenerator(); \
 	friend struct Z_Construct_UClass_ALevelGenerator_Statics; \
@@ -42,7 +42,7 @@ public: \
 	DECLARE_SERIALIZER(ALevelGenerator)
 
 
-#define A1_Search_Source_A1_Search_Public_LevelGenerator_h_17_STANDARD_CONSTRUCTORS \
+#define A1_Search_Source_A1_Search_Public_LevelGenerator_h_20_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API ALevelGenerator(const FObjectInitializer& ObjectInitializer); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(ALevelGenerator) \
@@ -55,7 +55,7 @@ private: \
 public:
 
 
-#define A1_Search_Source_A1_Search_Public_LevelGenerator_h_17_ENHANCED_CONSTRUCTORS \
+#define A1_Search_Source_A1_Search_Public_LevelGenerator_h_20_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	NO_API ALevelGenerator(ALevelGenerator&&); \
@@ -66,28 +66,28 @@ public: \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(ALevelGenerator)
 
 
-#define A1_Search_Source_A1_Search_Public_LevelGenerator_h_17_PRIVATE_PROPERTY_OFFSET
-#define A1_Search_Source_A1_Search_Public_LevelGenerator_h_14_PROLOG
-#define A1_Search_Source_A1_Search_Public_LevelGenerator_h_17_GENERATED_BODY_LEGACY \
+#define A1_Search_Source_A1_Search_Public_LevelGenerator_h_20_PRIVATE_PROPERTY_OFFSET
+#define A1_Search_Source_A1_Search_Public_LevelGenerator_h_17_PROLOG
+#define A1_Search_Source_A1_Search_Public_LevelGenerator_h_20_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	A1_Search_Source_A1_Search_Public_LevelGenerator_h_17_PRIVATE_PROPERTY_OFFSET \
-	A1_Search_Source_A1_Search_Public_LevelGenerator_h_17_SPARSE_DATA \
-	A1_Search_Source_A1_Search_Public_LevelGenerator_h_17_RPC_WRAPPERS \
-	A1_Search_Source_A1_Search_Public_LevelGenerator_h_17_INCLASS \
-	A1_Search_Source_A1_Search_Public_LevelGenerator_h_17_STANDARD_CONSTRUCTORS \
+	A1_Search_Source_A1_Search_Public_LevelGenerator_h_20_PRIVATE_PROPERTY_OFFSET \
+	A1_Search_Source_A1_Search_Public_LevelGenerator_h_20_SPARSE_DATA \
+	A1_Search_Source_A1_Search_Public_LevelGenerator_h_20_RPC_WRAPPERS \
+	A1_Search_Source_A1_Search_Public_LevelGenerator_h_20_INCLASS \
+	A1_Search_Source_A1_Search_Public_LevelGenerator_h_20_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define A1_Search_Source_A1_Search_Public_LevelGenerator_h_17_GENERATED_BODY \
+#define A1_Search_Source_A1_Search_Public_LevelGenerator_h_20_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	A1_Search_Source_A1_Search_Public_LevelGenerator_h_17_PRIVATE_PROPERTY_OFFSET \
-	A1_Search_Source_A1_Search_Public_LevelGenerator_h_17_SPARSE_DATA \
-	A1_Search_Source_A1_Search_Public_LevelGenerator_h_17_RPC_WRAPPERS_NO_PURE_DECLS \
-	A1_Search_Source_A1_Search_Public_LevelGenerator_h_17_INCLASS_NO_PURE_DECLS \
-	A1_Search_Source_A1_Search_Public_LevelGenerator_h_17_ENHANCED_CONSTRUCTORS \
+	A1_Search_Source_A1_Search_Public_LevelGenerator_h_20_PRIVATE_PROPERTY_OFFSET \
+	A1_Search_Source_A1_Search_Public_LevelGenerator_h_20_SPARSE_DATA \
+	A1_Search_Source_A1_Search_Public_LevelGenerator_h_20_RPC_WRAPPERS_NO_PURE_DECLS \
+	A1_Search_Source_A1_Search_Public_LevelGenerator_h_20_INCLASS_NO_PURE_DECLS \
+	A1_Search_Source_A1_Search_Public_LevelGenerator_h_20_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 

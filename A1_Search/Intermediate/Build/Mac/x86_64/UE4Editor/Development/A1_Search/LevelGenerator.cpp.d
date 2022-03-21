@@ -2667,11 +2667,13 @@
   /Users/harrisonverrios/Documents/Uni/FIT3094\ (Artificial\ Life)/Assignments/UE4_AI_Assignment_1/A1_Search/Source/A1_Search/Private/LevelGenerator.cpp \
   /Users/harrisonverrios/Documents/Uni/FIT3094\ (Artificial\ Life)/Assignments/UE4_AI_Assignment_1/A1_Search/Intermediate/Build/Mac/x86_64/UE4Editor/Development/A1_Search/Definitions.A1_Search.h \
   /Users/harrisonverrios/Documents/Uni/FIT3094\ (Artificial\ Life)/Assignments/UE4_AI_Assignment_1/A1_Search/Source/A1_Search/Public/LevelGenerator.h \
-  /Users/harrisonverrios/Documents/Uni/FIT3094\ (Artificial\ Life)/Assignments/UE4_AI_Assignment_1/A1_Search/Source/A1_Search/Public/SearchType.h \
   /Users/harrisonverrios/Documents/Uni/FIT3094\ (Artificial\ Life)/Assignments/UE4_AI_Assignment_1/A1_Search/Source/A1_Search/Public/Gold.h \
   /Users/harrisonverrios/Documents/Uni/FIT3094\ (Artificial\ Life)/Assignments/UE4_AI_Assignment_1/A1_Search/Intermediate/Build/Mac/x86_64/UE4Editor/Inc/A1_Search/Gold.generated.h \
   /Users/harrisonverrios/Documents/Uni/FIT3094\ (Artificial\ Life)/Assignments/UE4_AI_Assignment_1/A1_Search/Source/A1_Search/Public/Ship.h \
   /Users/harrisonverrios/Documents/Uni/FIT3094\ (Artificial\ Life)/Assignments/UE4_AI_Assignment_1/A1_Search/Source/A1_Search/Public/GridNode.h \
   /Users/harrisonverrios/Documents/Uni/FIT3094\ (Artificial\ Life)/Assignments/UE4_AI_Assignment_1/A1_Search/Source/A1_Search/Public/GridType.h \
   /Users/harrisonverrios/Documents/Uni/FIT3094\ (Artificial\ Life)/Assignments/UE4_AI_Assignment_1/A1_Search/Intermediate/Build/Mac/x86_64/UE4Editor/Inc/A1_Search/Ship.generated.h \
-  /Users/harrisonverrios/Documents/Uni/FIT3094\ (Artificial\ Life)/Assignments/UE4_AI_Assignment_1/A1_Search/Intermediate/Build/Mac/x86_64/UE4Editor/Inc/A1_Search/LevelGenerator.generated.h
+  /Users/harrisonverrios/Documents/Uni/FIT3094\ (Artificial\ Life)/Assignments/UE4_AI_Assignment_1/A1_Search/Intermediate/Build/Mac/x86_64/UE4Editor/Inc/A1_Search/LevelGenerator.generated.h \
+  /Users/harrisonverrios/Documents/Uni/FIT3094\ (Artificial\ Life)/Assignments/UE4_AI_Assignment_1/A1_Search/Source/A1_Search/Public/PathManager.h \
+  /Users/harrisonverrios/Documents/Uni/FIT3094\ (Artificial\ Life)/Assignments/UE4_AI_Assignment_1/A1_Search/Source/A1_Search/Public/SearchType.h \
+  /Users/harrisonverrios/Documents/Uni/FIT3094\ (Artificial\ Life)/Assignments/UE4_AI_Assignment_1/A1_Search/Intermediate/Build/Mac/x86_64/UE4Editor/Inc/A1_Search/PathManager.generated.h

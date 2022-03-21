@@ -17,6 +17,7 @@ void EmptyLinkFunctionForGeneratedCodeShip() {}
 	A1_SEARCH_API UClass* Z_Construct_UClass_AShip();
 	ENGINE_API UClass* Z_Construct_UClass_AActor();
 	UPackage* Z_Construct_UPackage__Script_A1_Search();
+	A1_SEARCH_API UClass* Z_Construct_UClass_APathManager_NoRegister();
 // End Cross Module References
 	void AShip::StaticRegisterNativesAShip()
 	{
@@ -39,6 +40,10 @@ void EmptyLinkFunctionForGeneratedCodeShip() {}
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_Tolerance_MetaData[];
 #endif
 		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_Tolerance;
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_PathManager_MetaData[];
+#endif
+		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_PathManager;
 		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
 		static const FCppClassTypeInfoStatic StaticCppClassTypeInfo;
 		static const UE4CodeGen_Private::FClassParams ClassParams;
@@ -73,9 +78,18 @@ void EmptyLinkFunctionForGeneratedCodeShip() {}
 	};
 #endif
 	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UClass_AShip_Statics::NewProp_Tolerance = { "Tolerance", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AShip, Tolerance), METADATA_PARAMS(Z_Construct_UClass_AShip_Statics::NewProp_Tolerance_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AShip_Statics::NewProp_Tolerance_MetaData)) };
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AShip_Statics::NewProp_PathManager_MetaData[] = {
+		{ "Comment", "// A reference to the current level\n" },
+		{ "ModuleRelativePath", "Public/Ship.h" },
+		{ "ToolTip", "A reference to the current level" },
+	};
+#endif
+	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AShip_Statics::NewProp_PathManager = { "PathManager", nullptr, (EPropertyFlags)0x0010000000000000, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AShip, PathManager), Z_Construct_UClass_APathManager_NoRegister, METADATA_PARAMS(Z_Construct_UClass_AShip_Statics::NewProp_PathManager_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AShip_Statics::NewProp_PathManager_MetaData)) };
 	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AShip_Statics::PropPointers[] = {
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AShip_Statics::NewProp_MoveSpeed,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AShip_Statics::NewProp_Tolerance,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AShip_Statics::NewProp_PathManager,
 	};
 	const FCppClassTypeInfoStatic Z_Construct_UClass_AShip_Statics::StaticCppClassTypeInfo = {
 		TCppClassTypeTraits<AShip>::IsAbstract,
@@ -104,7 +118,7 @@ void EmptyLinkFunctionForGeneratedCodeShip() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(AShip, 834077939);
+	IMPLEMENT_CLASS(AShip, 2502448204);
 	template<> A1_SEARCH_API UClass* StaticClass<AShip>()
 	{
 		return AShip::StaticClass();

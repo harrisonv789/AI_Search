@@ -2,7 +2,7 @@
 // Harrison Verrios
 
 #include "Ship.h"
-
+#include "PathManager.h"
 #include "LevelGenerator.h"
 
 // Sets default values
@@ -50,7 +50,7 @@ void AShip::Tick(float DeltaTime)
 		{
 			// Update the position to the actual target
 			CurrentPosition = TargetPosition;
-			Level->StartNode = Path[0];
+			PathManager->StartNode = Path[0];
 			Path.RemoveAt(0);
 		}
 
