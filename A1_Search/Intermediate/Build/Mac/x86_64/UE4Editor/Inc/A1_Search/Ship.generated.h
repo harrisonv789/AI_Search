@@ -14,8 +14,16 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define A1_SEARCH_Ship_generated_h
 
 #define A1_Search_Source_A1_Search_Public_Ship_h_20_SPARSE_DATA
-#define A1_Search_Source_A1_Search_Public_Ship_h_20_RPC_WRAPPERS
-#define A1_Search_Source_A1_Search_Public_Ship_h_20_RPC_WRAPPERS_NO_PURE_DECLS
+#define A1_Search_Source_A1_Search_Public_Ship_h_20_RPC_WRAPPERS \
+ \
+	DECLARE_FUNCTION(execGetMoveSpeed);
+
+
+#define A1_Search_Source_A1_Search_Public_Ship_h_20_RPC_WRAPPERS_NO_PURE_DECLS \
+ \
+	DECLARE_FUNCTION(execGetMoveSpeed);
+
+
 #define A1_Search_Source_A1_Search_Public_Ship_h_20_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAShip(); \

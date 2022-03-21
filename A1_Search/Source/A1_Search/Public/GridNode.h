@@ -56,6 +56,12 @@ class A1_SEARCH_API GridNode
 	float GetTravelCost () const;
 
 	/**
+	 * @brief Calculates the speed factor when crossing this node
+	 * @return The speed factor
+	 */
+	float GetNodeSpeed () const;
+
+	/**
 	 * @brief Returns the cost for a particular node
 	 * @param type The type of the grid node
 	 * @return The cost to land on this node

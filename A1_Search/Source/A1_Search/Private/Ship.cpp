@@ -43,7 +43,7 @@ void AShip::Tick(float DeltaTime)
 		Direction.Normalize();
 
 		// Alter the current position
-		CurrentPosition += Direction * MoveSpeed * DeltaTime;
+		CurrentPosition += Direction * DeltaTime * GetMoveSpeed();
 
 		// Check for a new point
 		if (FVector::Dist(CurrentPosition, TargetPosition) <= Tolerance)
@@ -63,4 +63,12 @@ void AShip::Tick(float DeltaTime)
 	{
 		GeneratePath = true;
 	}
+}
+
+float AShip::GetMoveSpeed() const
+{
+	// Make sure the path is valid
+	if (Path.Num() > 0)
+		return MoveSpeed * Path[0]->GetNodeSpeed();
+	return 0.0;
 }

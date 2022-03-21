@@ -29,6 +29,17 @@ float GridNode::GetTravelCost() const
 	return GridTypeCost(GridType);
 }
 
+float GridNode::GetNodeSpeed() const
+{
+	// Check the grid type and return the correct speed factor
+	switch (GridType)
+	{
+		case DeepWater: return 1.0;
+		case ShallowWater: return 0.5;
+		default: return 0.01;
+	}
+}
+
 float GridNode::GridTypeCost(EGridType type)
 {
 	// Check the grid type and return the correct cost

@@ -54,6 +54,13 @@ class A1_SEARCH_API AShip : public AActor
 	 */
 	virtual void Tick(float DeltaTime) override;
 
+	/**
+	 * @brief Returns the current move speed
+	 * @return The move speed in units per second
+	 */
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetMoveSpeed () const;
+
 
 	
 	/**************************************************************/

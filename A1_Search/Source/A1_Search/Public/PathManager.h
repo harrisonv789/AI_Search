@@ -24,9 +24,27 @@ class A1_SEARCH_API APathManager : public AActor
 	public:
 
 	// The current search count of the tree
+	UPROPERTY(BlueprintReadOnly)
 	int SearchCount;
 
+	// The length of the current path
+	UPROPERTY(BlueprintReadOnly)
+	int PathLength;
+
+	// The total cost of the search
+	UPROPERTY(BlueprintReadOnly)
+	int PathCost;
+
+	// The distance to the goal
+	UPROPERTY(BlueprintReadOnly)
+	float GoalDistance;
+
+	// The time taken to calculate the path
+	UPROPERTY(BlueprintReadOnly)
+	float PathCalculationTime;
+
 	// Whether the current path is calculated
+	UPROPERTY(BlueprintReadOnly)
 	bool IsPathCalculated;
 
 	// The start node of the search tree
@@ -58,6 +76,18 @@ class A1_SEARCH_API APathManager : public AActor
 
 	
 	/**************************************************************/
+	private:
+
+	// The starting time of the path calculation
+	FDateTime StartingTime;
+
+	// Whether a path has been found
+	bool ValidPath;
+
+
+	
+	/**************************************************************/
+	public:
 
 	/**
 	 * @brief Sets default values for this actor's properties
@@ -74,6 +104,20 @@ class A1_SEARCH_API APathManager : public AActor
 	 * @brief Creates a new path and details it
 	 */
 	void CreatePath();
+
+	/**
+	 * @brief Calculates the path factor dividing distance by cost
+	 * @return The path factor
+	 */
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetPathFactor () const;
+
+	/**
+	 * @brief Gets the name of the current search algorithm
+	 * @return The name of the algorithm
+	 */
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FString GetSearchTypeName () const;
 	
 	
 

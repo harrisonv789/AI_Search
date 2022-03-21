@@ -13,10 +13,14 @@ APathManager::APathManager()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
+
 void APathManager::CreatePath()
 {
 	// Resets the path
 	ResetPath();
+
+	// Store the starting time
+	StartingTime = FDateTime::Now();
 	
 	// Load the search based on the search type
 	switch (SearchType)
@@ -27,9 +31,42 @@ void APathManager::CreatePath()
 		case A_STAR:	CalculateAStar(); break;
 		default: break;
 	}
-		
-	DetailPath();
+
+	// If the final goal is reached
+	if (ValidPath)
+	{
+		RenderPath();
+		if (Ship)
+			Ship->GeneratePath = false;
+
+		// Find the difference in time
+		PathCalculationTime = (FDateTime::Now() - StartingTime).GetTotalSeconds();
+
+		// Display the path information
+		DetailPath();
+	}
 }
+
+
+float APathManager::GetPathFactor() const
+{
+	if (GoalDistance == 0 ) return 0;
+	return PathLength / GoalDistance;
+}
+
+
+FString APathManager::GetSearchTypeName() const
+{
+	switch (SearchType)
+	{
+		case DFS:		return "DFS";
+		case BFS:		return "BFS";
+		case DIJKSTRA:	return "Dijkstra";
+		case A_STAR:	return "A*";
+		default:		return "Missing!";
+	}
+}
+
 
 // Called when the game starts or when spawned
 void APathManager::BeginPlay()
@@ -38,11 +75,13 @@ void APathManager::BeginPlay()
 	
 }
 
+
 // Called every frame
 void APathManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
+
 
 float APathManager::CalculateDistanceBetweenNodes(const GridNode* first, const GridNode* second)
 {
@@ -50,23 +89,12 @@ float APathManager::CalculateDistanceBetweenNodes(const GridNode* first, const G
 	return distToTarget.Size();
 }
 
-void APathManager::DetailPath() const
-{
-	// Onscreen Debug (Don't forget the include!)
-	GEngine->AddOnScreenDebugMessage(-1, 12.f, FColor::White, FString::Printf(TEXT("Total Cells searched: %d with a path length of: %d and a distance of: %f"), SearchCount, Ship->Path.Num(), CalculateDistanceBetweenNodes(StartNode, GoalNode)));
-	GEngine->AddOnScreenDebugMessage(-1, 12.f, FColor::White, FString::Printf(TEXT("The difference between the current implemented path and the direct flight path is: %f"), Ship->Path.Num() / CalculateDistanceBetweenNodes(StartNode, GoalNode)));
-    
-	// Log Debug message (Accessed through Window->Developer Tools->Output Log)
-	UE_LOG(LogTemp, Warning, TEXT("Total Cells searched: %d with a path length of: %d and a distance of: %f"), SearchCount, Ship->Path.Num(), CalculateDistanceBetweenNodes(StartNode, GoalNode));
-	UE_LOG(LogTemp, Warning, TEXT("The difference between the current implemented path and the direct flight path is: %f"), Ship->Path.Num() / CalculateDistanceBetweenNodes(StartNode, GoalNode));
-}
 
 void APathManager::CalculateDFS()
 {
 	// Create the starting nodes
 	GridNode* currentNode = nullptr;
 	GridNode* tempNode = nullptr;
-	bool isGoalFound = false;
 
 	// Create a list of nodes
 	TArray<GridNode*> nodesToVisit;
@@ -85,7 +113,7 @@ void APathManager::CalculateDFS()
 		// Check if the goal is reached
 		if (currentNode == GoalNode)
 		{
-			isGoalFound = true;
+			ValidPath = true;
 			break;
 		}
 
@@ -140,22 +168,14 @@ void APathManager::CalculateDFS()
 			}
 		}
 	}
-
-	// If the final goal is reached
-	if (isGoalFound)
-	{
-		RenderPath();
-		if (Ship)
-			Ship->GeneratePath = false;
-	}
 }
+
 
 void APathManager::CalculateBFS()
 {
 	// Create the starting nodes
 	GridNode* currentNode = nullptr;
 	GridNode* tempNode = nullptr;
-	bool isGoalFound = false;
 
 	// Create a list of nodes
 	TArray<GridNode*> nodesToVisit;
@@ -174,7 +194,7 @@ void APathManager::CalculateBFS()
 		// Check if the goal is reached
 		if (currentNode == GoalNode)
 		{
-			isGoalFound = true;
+			ValidPath = true;
 			break;
 		}
 
@@ -229,21 +249,15 @@ void APathManager::CalculateBFS()
 			}
 		}
 	}
-
-	// If the final goal is reached
-	if (isGoalFound)
-	{
-		RenderPath();
-		if (Ship)
-			Ship->GeneratePath = false;
-	}
 }
+
 
 void APathManager::CalculateDijkstra()
 {
 	// Remove the H factor from the algorithm
 	CalculateAStar(0.0);
 }
+
 
 void APathManager::CalculateAStar(float weight)
 {
@@ -264,6 +278,10 @@ void APathManager::CalculateAStar(float weight)
 
 	// Loop while the open list is valid
 	while (openList.Num() > 0) {
+		
+		// Increase the search counter
+		SearchCount++;
+		
 	    // Find the node in the open list with the smallest F value
 		{
 			int smallFIndex = 0;
@@ -335,11 +353,10 @@ void APathManager::CalculateAStar(float weight)
 		}
 	}
 
-	// TODO check if the path is valid
-	RenderPath();
-	if (Ship)
-		Ship->GeneratePath = false;
+	// The path is now valid
+	ValidPath = true;
 }
+
 
 void APathManager::RenderPath()
 {
@@ -359,14 +376,39 @@ void APathManager::RenderPath()
 		if (Ship)
 			Ship->Path.EmplaceAt(0, LevelGenerator->WorldArray[CurrentNode->X][CurrentNode->Y]);
 		CurrentNode = CurrentNode->Parent;
+
+		// Add all the cost to move from each node
+		if (CurrentNode != GoalNode)
+		{
+			PathCost += CurrentNode->GetTravelCost();
+			PathLength++;
+		}
 	}
+
+	// Calculate the distance to the goal from the start
+	GoalDistance = CalculateDistanceBetweenNodes(StartNode, GoalNode);
 }
+
+
+void APathManager::DetailPath() const
+{
+	// Remove and use UI
+	UE_LOG(LogTemp, Log, TEXT("Cells Searched: %d, Path Length: %d, Distance: %f, Cost: %d"), SearchCount, PathLength, GoalDistance, PathCost);
+
+	// Print the factor the screen
+	UE_LOG(LogTemp, Log, TEXT("The difference between the current implemented path and the direct flight path is: %f"), GetPathFactor());
+}
+
 
 void APathManager::ResetPath()
 {
 	// Reset the nodes for the search
 	IsPathCalculated = false;
 	SearchCount = 0;
+	PathCost = 0;
+	PathLength = 0;
+	ValidPath = false;
+	PathCalculationTime = 0.0;
 
 	// Reset the nodes
 	for (int X = 0; X < LevelGenerator->MapSizeX; X++)
