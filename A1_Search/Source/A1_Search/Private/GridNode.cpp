@@ -2,6 +2,7 @@
 // Harrison Verrios
 
 #include "GridNode.h"
+#include "LevelGenerator.h"
 
 GridNode::GridNode()
 {
@@ -35,7 +36,7 @@ float GridNode::GetNodeSpeed() const
 	switch (GridType)
 	{
 		case DeepWater: return 1.0;
-		case ShallowWater: return 0.5;
+		case ShallowWater: return ALevelGenerator::GetShallowWater() ? 0.5 : 1.0;
 		default: return 0.01;
 	}
 }
@@ -46,7 +47,7 @@ float GridNode::GridTypeCost(EGridType type)
 	switch (type)
 	{
 		case DeepWater: return 1;
-		case ShallowWater: return 2;
+		case ShallowWater: return ALevelGenerator::GetShallowWater() ? 2 : 1;
 		default: return 999999;
 	}
 }

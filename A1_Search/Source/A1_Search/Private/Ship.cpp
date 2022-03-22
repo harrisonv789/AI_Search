@@ -29,12 +29,12 @@ void AShip::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	// Check if the path is not empty
-	if (Path.Num() > 0) {
+	if (Path.Num() > 0 && Morale > 0) {
 
 		// Get the current position
 		FVector CurrentPosition = GetActorLocation();
-		const float TargetXPos = Path[0]->X * ALevelGenerator::GRID_SIZE_WORLD;
-		const float TargetYPos = Path[0]->Y * ALevelGenerator::GRID_SIZE_WORLD;
+		const float TargetXPos = Path[0]->X * ALevelGenerator::GRID_SIZE_WORLD + POSITION_OFFSET_X;
+		const float TargetYPos = Path[0]->Y * ALevelGenerator::GRID_SIZE_WORLD + POSITION_OFFSET_Y;
 
 		// Determine the target position
 		const FVector TargetPosition = FVector(TargetXPos, TargetYPos, CurrentPosition.Z);
@@ -42,6 +42,7 @@ void AShip::Tick(float DeltaTime)
 		// Determine the unit direction
 		FVector Direction = TargetPosition - CurrentPosition;
 		Direction.Normalize();
+		MoveHeading = Direction;
 
 		// Alter the current position
 		CurrentPosition += Direction * DeltaTime * GetMoveSpeed();
@@ -63,12 +64,18 @@ void AShip::Tick(float DeltaTime)
 	}
 
 	// Otherwise, if no path
-	else
+	else if (Morale > 0)
 	{
 		GeneratePath = true;
 
 		// Reset the morale
 		Morale = MAX_MORALE;
+	}
+
+	// If Morale is zero
+	if (Morale <= 0)
+	{
+		PathManager->ResetPath();
 	}
 }
 

@@ -30,7 +30,7 @@ void EmptyLinkFunctionForGeneratedCodeSearchType() {}
 		return ESearchType_StaticEnum();
 	}
 	static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_ESearchType(ESearchType_StaticEnum, TEXT("/Script/A1_Search"), TEXT("ESearchType"), false, nullptr, nullptr);
-	uint32 Get_Z_Construct_UEnum_A1_Search_ESearchType_Hash() { return 666150366U; }
+	uint32 Get_Z_Construct_UEnum_A1_Search_ESearchType_Hash() { return 1096762986U; }
 	UEnum* Z_Construct_UEnum_A1_Search_ESearchType()
 	{
 #if WITH_HOT_RELOAD
@@ -46,6 +46,7 @@ void EmptyLinkFunctionForGeneratedCodeSearchType() {}
 				{ "BFS", (int64)BFS },
 				{ "DIJKSTRA", (int64)DIJKSTRA },
 				{ "A_STAR", (int64)A_STAR },
+				{ "W_A_STAR", (int64)W_A_STAR },
 			};
 #if WITH_METADATA
 			const UE4CodeGen_Private::FMetaDataPairParam Enum_MetaDataParams[] = {
@@ -62,6 +63,9 @@ void EmptyLinkFunctionForGeneratedCodeSearchType() {}
 				{ "DIJKSTRA.ToolTip", "Breadth First Search" },
 				{ "IsBlueprintBase", "true" },
 				{ "ModuleRelativePath", "Public/SearchType.h" },
+				{ "W_A_STAR.Comment", "// A* Algorithm\n" },
+				{ "W_A_STAR.Name", "W_A_STAR" },
+				{ "W_A_STAR.ToolTip", "A* Algorithm" },
 			};
 #endif
 			static const UE4CodeGen_Private::FEnumParams EnumParams = {

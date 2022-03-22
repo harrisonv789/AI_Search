@@ -24,6 +24,21 @@ void EmptyLinkFunctionForGeneratedCodeLevelGenerator() {}
 	COREUOBJECT_API UClass* Z_Construct_UClass_UClass();
 	A1_SEARCH_API UClass* Z_Construct_UClass_APathManager_NoRegister();
 // End Cross Module References
+	DEFINE_FUNCTION(ALevelGenerator::execSetShallowWater)
+	{
+		P_GET_UBOOL(Z_Param_flag);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		ALevelGenerator::SetShallowWater(Z_Param_flag);
+		P_NATIVE_END;
+	}
+	DEFINE_FUNCTION(ALevelGenerator::execGetShallowWater)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		*(bool*)Z_Param__Result=ALevelGenerator::GetShallowWater();
+		P_NATIVE_END;
+	}
 	DEFINE_FUNCTION(ALevelGenerator::execGenerateWorldFromFile)
 	{
 		P_GET_TARRAY(FString,Z_Param_WorldArrayString);
@@ -37,6 +52,8 @@ void EmptyLinkFunctionForGeneratedCodeLevelGenerator() {}
 		UClass* Class = ALevelGenerator::StaticClass();
 		static const FNameNativePtrPair Funcs[] = {
 			{ "GenerateWorldFromFile", &ALevelGenerator::execGenerateWorldFromFile },
+			{ "GetShallowWater", &ALevelGenerator::execGetShallowWater },
+			{ "SetShallowWater", &ALevelGenerator::execSetShallowWater },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 	}
@@ -74,6 +91,84 @@ void EmptyLinkFunctionForGeneratedCodeLevelGenerator() {}
 		if (!ReturnFunction)
 		{
 			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_ALevelGenerator_GenerateWorldFromFile_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_ALevelGenerator_GetShallowWater_Statics
+	{
+		struct LevelGenerator_eventGetShallowWater_Parms
+		{
+			bool ReturnValue;
+		};
+		static void NewProp_ReturnValue_SetBit(void* Obj);
+		static const UE4CodeGen_Private::FBoolPropertyParams NewProp_ReturnValue;
+		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UE4CodeGen_Private::FFunctionParams FuncParams;
+	};
+	void Z_Construct_UFunction_ALevelGenerator_GetShallowWater_Statics::NewProp_ReturnValue_SetBit(void* Obj)
+	{
+		((LevelGenerator_eventGetShallowWater_Parms*)Obj)->ReturnValue = 1;
+	}
+	const UE4CodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_ALevelGenerator_GetShallowWater_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UE4CodeGen_Private::EPropertyGenFlags::Bool | UE4CodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(LevelGenerator_eventGetShallowWater_Parms), &Z_Construct_UFunction_ALevelGenerator_GetShallowWater_Statics::NewProp_ReturnValue_SetBit, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_ALevelGenerator_GetShallowWater_Statics::PropPointers[] = {
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ALevelGenerator_GetShallowWater_Statics::NewProp_ReturnValue,
+	};
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_ALevelGenerator_GetShallowWater_Statics::Function_MetaDataParams[] = {
+		{ "Comment", "/**\n\x09 * @brief Determines if using shallow water\n\x09 * @return A flag for shallow water using\n\x09 */" },
+		{ "ModuleRelativePath", "Public/LevelGenerator.h" },
+		{ "ToolTip", "@brief Determines if using shallow water\n@return A flag for shallow water using" },
+	};
+#endif
+	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_ALevelGenerator_GetShallowWater_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ALevelGenerator, nullptr, "GetShallowWater", nullptr, nullptr, sizeof(LevelGenerator_eventGetShallowWater_Parms), Z_Construct_UFunction_ALevelGenerator_GetShallowWater_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ALevelGenerator_GetShallowWater_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14022401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_ALevelGenerator_GetShallowWater_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_ALevelGenerator_GetShallowWater_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_ALevelGenerator_GetShallowWater()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_ALevelGenerator_GetShallowWater_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_ALevelGenerator_SetShallowWater_Statics
+	{
+		struct LevelGenerator_eventSetShallowWater_Parms
+		{
+			bool flag;
+		};
+		static void NewProp_flag_SetBit(void* Obj);
+		static const UE4CodeGen_Private::FBoolPropertyParams NewProp_flag;
+		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UE4CodeGen_Private::FFunctionParams FuncParams;
+	};
+	void Z_Construct_UFunction_ALevelGenerator_SetShallowWater_Statics::NewProp_flag_SetBit(void* Obj)
+	{
+		((LevelGenerator_eventSetShallowWater_Parms*)Obj)->flag = 1;
+	}
+	const UE4CodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_ALevelGenerator_SetShallowWater_Statics::NewProp_flag = { "flag", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Bool | UE4CodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(LevelGenerator_eventSetShallowWater_Parms), &Z_Construct_UFunction_ALevelGenerator_SetShallowWater_Statics::NewProp_flag_SetBit, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_ALevelGenerator_SetShallowWater_Statics::PropPointers[] = {
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ALevelGenerator_SetShallowWater_Statics::NewProp_flag,
+	};
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_ALevelGenerator_SetShallowWater_Statics::Function_MetaDataParams[] = {
+		{ "Comment", "/**\n\x09 * @brief Sets a new flag for using shallow water\n\x09 * @param flag A flag for shallow water using\n\x09 */" },
+		{ "ModuleRelativePath", "Public/LevelGenerator.h" },
+		{ "ToolTip", "@brief Sets a new flag for using shallow water\n@param flag A flag for shallow water using" },
+	};
+#endif
+	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_ALevelGenerator_SetShallowWater_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ALevelGenerator, nullptr, "SetShallowWater", nullptr, nullptr, sizeof(LevelGenerator_eventSetShallowWater_Parms), Z_Construct_UFunction_ALevelGenerator_SetShallowWater_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ALevelGenerator_SetShallowWater_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04022401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_ALevelGenerator_SetShallowWater_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_ALevelGenerator_SetShallowWater_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_ALevelGenerator_SetShallowWater()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_ALevelGenerator_SetShallowWater_Statics::FuncParams);
 		}
 		return ReturnFunction;
 	}
@@ -148,6 +243,8 @@ void EmptyLinkFunctionForGeneratedCodeLevelGenerator() {}
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_ALevelGenerator_Statics::FuncInfo[] = {
 		{ &Z_Construct_UFunction_ALevelGenerator_GenerateWorldFromFile, "GenerateWorldFromFile" }, // 534706362
+		{ &Z_Construct_UFunction_ALevelGenerator_GetShallowWater, "GetShallowWater" }, // 2978756178
+		{ &Z_Construct_UFunction_ALevelGenerator_SetShallowWater, "SetShallowWater" }, // 4217481873
 	};
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ALevelGenerator_Statics::Class_MetaDataParams[] = {
@@ -310,7 +407,7 @@ void EmptyLinkFunctionForGeneratedCodeLevelGenerator() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(ALevelGenerator, 2917694968);
+	IMPLEMENT_CLASS(ALevelGenerator, 114366498);
 	template<> A1_SEARCH_API UClass* StaticClass<ALevelGenerator>()
 	{
 		return ALevelGenerator::StaticClass();

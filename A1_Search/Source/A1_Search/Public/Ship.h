@@ -30,6 +30,10 @@ class A1_SEARCH_API AShip : public AActor
     UPROPERTY(EditAnywhere, Category = "Stats")
     float Tolerance;
 
+	// The direction the ship is heading
+	UPROPERTY(BlueprintReadOnly)
+	FVector MoveHeading;
+
     // A list of points on a path to follow
     TArray<GridNode*> Path;
 
@@ -46,6 +50,12 @@ class A1_SEARCH_API AShip : public AActor
 	// The current morale of the ship
 	UPROPERTY(BlueprintReadOnly)
 	int Morale;
+
+	// The offset in the X direction to position the ship in the right location
+	static constexpr int POSITION_OFFSET_X = 50;
+
+	// The offset in the Y direction to position the ship in the right location
+	static constexpr int POSITION_OFFSET_Y = 50;
 
 	
 	/**************************************************************/

@@ -17,6 +17,7 @@ void EmptyLinkFunctionForGeneratedCodeShip() {}
 	A1_SEARCH_API UClass* Z_Construct_UClass_AShip();
 	ENGINE_API UClass* Z_Construct_UClass_AActor();
 	UPackage* Z_Construct_UPackage__Script_A1_Search();
+	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FVector();
 	A1_SEARCH_API UClass* Z_Construct_UClass_APathManager_NoRegister();
 // End Cross Module References
 	DEFINE_FUNCTION(AShip::execGetMoveSpeed)
@@ -88,6 +89,10 @@ void EmptyLinkFunctionForGeneratedCodeShip() {}
 #endif
 		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_Tolerance;
 #if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_MoveHeading_MetaData[];
+#endif
+		static const UE4CodeGen_Private::FStructPropertyParams NewProp_MoveHeading;
+#if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_PathManager_MetaData[];
 #endif
 		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_PathManager;
@@ -133,6 +138,15 @@ void EmptyLinkFunctionForGeneratedCodeShip() {}
 #endif
 	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UClass_AShip_Statics::NewProp_Tolerance = { "Tolerance", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AShip, Tolerance), METADATA_PARAMS(Z_Construct_UClass_AShip_Statics::NewProp_Tolerance_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AShip_Statics::NewProp_Tolerance_MetaData)) };
 #if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AShip_Statics::NewProp_MoveHeading_MetaData[] = {
+		{ "Category", "Ship" },
+		{ "Comment", "// The direction the ship is heading\n" },
+		{ "ModuleRelativePath", "Public/Ship.h" },
+		{ "ToolTip", "The direction the ship is heading" },
+	};
+#endif
+	const UE4CodeGen_Private::FStructPropertyParams Z_Construct_UClass_AShip_Statics::NewProp_MoveHeading = { "MoveHeading", nullptr, (EPropertyFlags)0x0010000000000014, UE4CodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AShip, MoveHeading), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UClass_AShip_Statics::NewProp_MoveHeading_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AShip_Statics::NewProp_MoveHeading_MetaData)) };
+#if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AShip_Statics::NewProp_PathManager_MetaData[] = {
 		{ "Comment", "// A reference to the current level\n" },
 		{ "ModuleRelativePath", "Public/Ship.h" },
@@ -152,6 +166,7 @@ void EmptyLinkFunctionForGeneratedCodeShip() {}
 	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AShip_Statics::PropPointers[] = {
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AShip_Statics::NewProp_MoveSpeed,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AShip_Statics::NewProp_Tolerance,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AShip_Statics::NewProp_MoveHeading,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AShip_Statics::NewProp_PathManager,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AShip_Statics::NewProp_Morale,
 	};
@@ -182,7 +197,7 @@ void EmptyLinkFunctionForGeneratedCodeShip() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(AShip, 3494429499);
+	IMPLEMENT_CLASS(AShip, 2367080748);
 	template<> A1_SEARCH_API UClass* StaticClass<AShip>()
 	{
 		return AShip::StaticClass();

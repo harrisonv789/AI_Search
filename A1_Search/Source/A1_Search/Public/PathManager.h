@@ -62,8 +62,12 @@ class A1_SEARCH_API APathManager : public AActor
 	TSubclassOf<AActor> PathDisplayBlueprint;
 
 	// The search type to use
-	UPROPERTY(EditAnywhere, Category = "Search")
+	UPROPERTY(BlueprintReadWrite)
 	TEnumAsByte<ESearchType> SearchType;
+
+	// The weighted A star factor, only for use in W_A_STAR
+	UPROPERTY(BlueprintReadWrite)
+	float WeightedAStar = 1.0;
 
 	// A reference to the ship
 	UPROPERTY()
@@ -118,6 +122,19 @@ class A1_SEARCH_API APathManager : public AActor
 	 */
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FString GetSearchTypeName () const;
+
+	/**
+	 * @brief Resets the current path of the search algorithm
+	 */
+	void ResetPath();
+
+	/**
+	 * @brief Sets the default search algorithms when restarted
+	 * @param type The new default type
+	 * @param weight The new weighting
+	 */
+	UFUNCTION(BlueprintCallable)
+	static void SetDefaultSearch (ESearchType type, float weight);
 	
 	
 
@@ -166,6 +183,11 @@ class A1_SEARCH_API APathManager : public AActor
 	 */
 	void CalculateAStar(float weight = 1.0);
 
+	/*
+	 * @brief Calculates the Weighted A* search strategy
+	*/
+	void CalculateWeightedAStar();
+
 	/**
 	 * @brief Renders the current path of the search algorithm
 	 */
@@ -175,10 +197,5 @@ class A1_SEARCH_API APathManager : public AActor
 	 * @brief Displays information to the screen of the current path chosen
 	 */
 	void DetailPath() const;
-
-	/**
-	 * @brief Resets the current path of the search algorithm
-	 */
-	void ResetPath();
 	
 };

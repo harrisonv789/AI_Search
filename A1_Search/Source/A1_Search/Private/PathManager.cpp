@@ -5,6 +5,10 @@
 #include "PathManager.h"
 #include "LevelGenerator.h"
 
+// Store the default search types and weights
+static ESearchType DefaultSearchType = W_A_STAR;
+static float DefaultWeight = 2.0;
+
 
 // Sets default values
 APathManager::APathManager()
@@ -19,6 +23,10 @@ void APathManager::CreatePath()
 	// Resets the path
 	ResetPath();
 
+	// Set the variables to default
+	SearchType = DefaultSearchType;
+	WeightedAStar = DefaultWeight;
+
 	// Store the starting time
 	StartingTime = FDateTime::Now();
 	
@@ -29,6 +37,7 @@ void APathManager::CreatePath()
 		case BFS:		CalculateBFS(); break;
 		case DIJKSTRA:	CalculateDijkstra(); break;
 		case A_STAR:	CalculateAStar(); break;
+		case W_A_STAR:	CalculateWeightedAStar(); break;
 		default: break;
 	}
 
@@ -63,6 +72,7 @@ FString APathManager::GetSearchTypeName() const
 		case BFS:		return "BFS";
 		case DIJKSTRA:	return "Dijkstra";
 		case A_STAR:	return "A*";
+		case W_A_STAR:	return "Weighted (w=" + FString::SanitizeFloat(WeightedAStar, 1) + ") A*";
 		default:		return "Missing!";
 	}
 }
@@ -358,6 +368,12 @@ void APathManager::CalculateAStar(float weight)
 }
 
 
+void APathManager::CalculateWeightedAStar()
+{
+	CalculateAStar(WeightedAStar);
+}
+
+
 void APathManager::RenderPath()
 {
 	// Get the current world and final goal node
@@ -435,6 +451,13 @@ void APathManager::ResetPath()
 	// Reset the ships path
 	if (Ship)
 		Ship->Path.Empty();
+}
+
+
+void APathManager::SetDefaultSearch(ESearchType type, float weight)
+{
+	DefaultSearchType = type;
+	DefaultWeight = weight;
 }
 
 

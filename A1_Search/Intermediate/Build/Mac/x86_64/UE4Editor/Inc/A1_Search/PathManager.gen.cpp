@@ -17,12 +17,21 @@ void EmptyLinkFunctionForGeneratedCodePathManager() {}
 	A1_SEARCH_API UClass* Z_Construct_UClass_APathManager();
 	ENGINE_API UClass* Z_Construct_UClass_AActor();
 	UPackage* Z_Construct_UPackage__Script_A1_Search();
+	A1_SEARCH_API UEnum* Z_Construct_UEnum_A1_Search_ESearchType();
 	ENGINE_API UClass* Z_Construct_UClass_AActor_NoRegister();
 	COREUOBJECT_API UClass* Z_Construct_UClass_UClass();
-	A1_SEARCH_API UEnum* Z_Construct_UEnum_A1_Search_ESearchType();
 	A1_SEARCH_API UClass* Z_Construct_UClass_ALevelGenerator_NoRegister();
 	A1_SEARCH_API UClass* Z_Construct_UClass_AShip_NoRegister();
 // End Cross Module References
+	DEFINE_FUNCTION(APathManager::execSetDefaultSearch)
+	{
+		P_GET_PROPERTY(FByteProperty,Z_Param_type);
+		P_GET_PROPERTY(FFloatProperty,Z_Param_weight);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		APathManager::SetDefaultSearch(ESearchType(Z_Param_type),Z_Param_weight);
+		P_NATIVE_END;
+	}
 	DEFINE_FUNCTION(APathManager::execGetSearchTypeName)
 	{
 		P_FINISH;
@@ -43,6 +52,7 @@ void EmptyLinkFunctionForGeneratedCodePathManager() {}
 		static const FNameNativePtrPair Funcs[] = {
 			{ "GetPathFactor", &APathManager::execGetPathFactor },
 			{ "GetSearchTypeName", &APathManager::execGetSearchTypeName },
+			{ "SetDefaultSearch", &APathManager::execSetDefaultSearch },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 	}
@@ -114,6 +124,44 @@ void EmptyLinkFunctionForGeneratedCodePathManager() {}
 		}
 		return ReturnFunction;
 	}
+	struct Z_Construct_UFunction_APathManager_SetDefaultSearch_Statics
+	{
+		struct PathManager_eventSetDefaultSearch_Parms
+		{
+			TEnumAsByte<ESearchType> type;
+			float weight;
+		};
+		static const UE4CodeGen_Private::FBytePropertyParams NewProp_type;
+		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_weight;
+		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UE4CodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UE4CodeGen_Private::FBytePropertyParams Z_Construct_UFunction_APathManager_SetDefaultSearch_Statics::NewProp_type = { "type", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(PathManager_eventSetDefaultSearch_Parms, type), Z_Construct_UEnum_A1_Search_ESearchType, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_APathManager_SetDefaultSearch_Statics::NewProp_weight = { "weight", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(PathManager_eventSetDefaultSearch_Parms, weight), METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_APathManager_SetDefaultSearch_Statics::PropPointers[] = {
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_APathManager_SetDefaultSearch_Statics::NewProp_type,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_APathManager_SetDefaultSearch_Statics::NewProp_weight,
+	};
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_APathManager_SetDefaultSearch_Statics::Function_MetaDataParams[] = {
+		{ "Comment", "/**\n\x09 * @brief Sets the default search algorithms when restarted\n\x09 * @param type The new default type\n\x09 * @param weight The new weighting\n\x09 */" },
+		{ "ModuleRelativePath", "Public/PathManager.h" },
+		{ "ToolTip", "@brief Sets the default search algorithms when restarted\n@param type The new default type\n@param weight The new weighting" },
+	};
+#endif
+	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_APathManager_SetDefaultSearch_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_APathManager, nullptr, "SetDefaultSearch", nullptr, nullptr, sizeof(PathManager_eventSetDefaultSearch_Parms), Z_Construct_UFunction_APathManager_SetDefaultSearch_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_APathManager_SetDefaultSearch_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04022401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_APathManager_SetDefaultSearch_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_APathManager_SetDefaultSearch_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_APathManager_SetDefaultSearch()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_APathManager_SetDefaultSearch_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
 	UClass* Z_Construct_UClass_APathManager_NoRegister()
 	{
 		return APathManager::StaticClass();
@@ -164,6 +212,10 @@ void EmptyLinkFunctionForGeneratedCodePathManager() {}
 #endif
 		static const UE4CodeGen_Private::FBytePropertyParams NewProp_SearchType;
 #if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_WeightedAStar_MetaData[];
+#endif
+		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_WeightedAStar;
+#if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_LevelGenerator_MetaData[];
 #endif
 		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_LevelGenerator;
@@ -182,6 +234,7 @@ void EmptyLinkFunctionForGeneratedCodePathManager() {}
 	const FClassFunctionLinkInfo Z_Construct_UClass_APathManager_Statics::FuncInfo[] = {
 		{ &Z_Construct_UFunction_APathManager_GetPathFactor, "GetPathFactor" }, // 3259502185
 		{ &Z_Construct_UFunction_APathManager_GetSearchTypeName, "GetSearchTypeName" }, // 2274118120
+		{ &Z_Construct_UFunction_APathManager_SetDefaultSearch, "SetDefaultSearch" }, // 993768248
 	};
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_APathManager_Statics::Class_MetaDataParams[] = {
@@ -270,13 +323,22 @@ void EmptyLinkFunctionForGeneratedCodePathManager() {}
 	const UE4CodeGen_Private::FClassPropertyParams Z_Construct_UClass_APathManager_Statics::NewProp_PathDisplayBlueprint = { "PathDisplayBlueprint", nullptr, (EPropertyFlags)0x0014000000000001, UE4CodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(APathManager, PathDisplayBlueprint), Z_Construct_UClass_AActor_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(Z_Construct_UClass_APathManager_Statics::NewProp_PathDisplayBlueprint_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_APathManager_Statics::NewProp_PathDisplayBlueprint_MetaData)) };
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_APathManager_Statics::NewProp_SearchType_MetaData[] = {
-		{ "Category", "Search" },
+		{ "Category", "PathManager" },
 		{ "Comment", "// The search type to use\n" },
 		{ "ModuleRelativePath", "Public/PathManager.h" },
 		{ "ToolTip", "The search type to use" },
 	};
 #endif
-	const UE4CodeGen_Private::FBytePropertyParams Z_Construct_UClass_APathManager_Statics::NewProp_SearchType = { "SearchType", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(APathManager, SearchType), Z_Construct_UEnum_A1_Search_ESearchType, METADATA_PARAMS(Z_Construct_UClass_APathManager_Statics::NewProp_SearchType_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_APathManager_Statics::NewProp_SearchType_MetaData)) };
+	const UE4CodeGen_Private::FBytePropertyParams Z_Construct_UClass_APathManager_Statics::NewProp_SearchType = { "SearchType", nullptr, (EPropertyFlags)0x0010000000000004, UE4CodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(APathManager, SearchType), Z_Construct_UEnum_A1_Search_ESearchType, METADATA_PARAMS(Z_Construct_UClass_APathManager_Statics::NewProp_SearchType_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_APathManager_Statics::NewProp_SearchType_MetaData)) };
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_APathManager_Statics::NewProp_WeightedAStar_MetaData[] = {
+		{ "Category", "PathManager" },
+		{ "Comment", "// The weighted A star factor, only for use in W_A_STAR\n" },
+		{ "ModuleRelativePath", "Public/PathManager.h" },
+		{ "ToolTip", "The weighted A star factor, only for use in W_A_STAR" },
+	};
+#endif
+	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UClass_APathManager_Statics::NewProp_WeightedAStar = { "WeightedAStar", nullptr, (EPropertyFlags)0x0010000000000004, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(APathManager, WeightedAStar), METADATA_PARAMS(Z_Construct_UClass_APathManager_Statics::NewProp_WeightedAStar_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_APathManager_Statics::NewProp_WeightedAStar_MetaData)) };
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_APathManager_Statics::NewProp_LevelGenerator_MetaData[] = {
 		{ "Comment", "// A reference to the ship\n" },
@@ -304,6 +366,7 @@ void EmptyLinkFunctionForGeneratedCodePathManager() {}
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_APathManager_Statics::NewProp_PathDisplayActors,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_APathManager_Statics::NewProp_PathDisplayBlueprint,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_APathManager_Statics::NewProp_SearchType,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_APathManager_Statics::NewProp_WeightedAStar,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_APathManager_Statics::NewProp_LevelGenerator,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_APathManager_Statics::NewProp_Ship,
 	};
@@ -334,7 +397,7 @@ void EmptyLinkFunctionForGeneratedCodePathManager() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(APathManager, 2878160380);
+	IMPLEMENT_CLASS(APathManager, 1275309148);
 	template<> A1_SEARCH_API UClass* StaticClass<APathManager>()
 	{
 		return APathManager::StaticClass();

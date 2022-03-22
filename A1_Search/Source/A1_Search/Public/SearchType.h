@@ -10,4 +10,5 @@ enum ESearchType
 	BFS			= 1, // Breadth First Search
 	DIJKSTRA    = 2, // Uniform Cost Search
 	A_STAR	    = 3, // A* Algorithm
+	W_A_STAR	= 4, // Weighted A Star Algorithm
 };

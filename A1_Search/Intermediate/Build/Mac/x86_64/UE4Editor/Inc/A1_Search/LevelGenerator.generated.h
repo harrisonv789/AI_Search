@@ -16,11 +16,15 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define A1_Search_Source_A1_Search_Public_LevelGenerator_h_20_SPARSE_DATA
 #define A1_Search_Source_A1_Search_Public_LevelGenerator_h_20_RPC_WRAPPERS \
  \
+	DECLARE_FUNCTION(execSetShallowWater); \
+	DECLARE_FUNCTION(execGetShallowWater); \
 	DECLARE_FUNCTION(execGenerateWorldFromFile);
 
 
 #define A1_Search_Source_A1_Search_Public_LevelGenerator_h_20_RPC_WRAPPERS_NO_PURE_DECLS \
  \
+	DECLARE_FUNCTION(execSetShallowWater); \
+	DECLARE_FUNCTION(execGetShallowWater); \
 	DECLARE_FUNCTION(execGenerateWorldFromFile);
 
 

@@ -101,6 +101,20 @@ class A1_SEARCH_API ALevelGenerator : public AActor
     UFUNCTION(BlueprintCallable)
     void GenerateWorldFromFile (TArray<FString> WorldArrayString);
 
+	/**
+	 * @brief Determines if using shallow water
+	 * @return A flag for shallow water using
+	 */
+	UFUNCTION(BlueprintPure, BlueprintCallable)
+	static bool GetShallowWater ();
+
+	/**
+	 * @brief Sets a new flag for using shallow water
+	 * @param flag A flag for shallow water using
+	 */
+	UFUNCTION(BlueprintCallable)
+	static void SetShallowWater (bool flag);
+
 
 	
 	/**************************************************************/

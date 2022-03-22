@@ -4,6 +4,9 @@
 #include "LevelGenerator.h"
 #include "PathManager.h"
 
+// Stores the use of shallow water
+static bool ShallowWaterFlag = true;
+
 // Sets default values
 ALevelGenerator::ALevelGenerator()
 {
@@ -15,7 +18,6 @@ ALevelGenerator::ALevelGenerator()
 void ALevelGenerator::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
@@ -97,6 +99,19 @@ void ALevelGenerator::GenerateWorldFromFile(TArray<FString> WorldArrayString)
 	PathManager->CreatePath();
 }
 
+
+bool ALevelGenerator::GetShallowWater()
+{
+	return ShallowWaterFlag;
+}
+
+
+void ALevelGenerator::SetShallowWater(bool flag)
+{
+	ShallowWaterFlag = flag;
+}
+
+
 void ALevelGenerator::SpawnWorldActors(char Grid[255][255])
 {
 	// Get the current world
@@ -162,8 +177,8 @@ void ALevelGenerator::SpawnWorldActors(char Grid[255][255])
 		FVector CameraPosition = Camera->GetActorLocation();
 
 		// Reset the position
-		CameraPosition.X = MapSizeX * 0.5 * GRID_SIZE_WORLD;
-		CameraPosition.Y = MapSizeY * 0.5 * GRID_SIZE_WORLD;
+		CameraPosition.X = MapSizeX * 0.5 * GRID_SIZE_WORLD + 50;
+		CameraPosition.Y = MapSizeY * 0.5 * GRID_SIZE_WORLD + 50;
 
 		// Set the camera location
 		Camera->SetActorLocation(CameraPosition);

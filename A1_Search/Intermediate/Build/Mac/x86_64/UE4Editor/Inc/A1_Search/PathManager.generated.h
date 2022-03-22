@@ -16,12 +16,14 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define A1_Search_Source_A1_Search_Public_PathManager_h_21_SPARSE_DATA
 #define A1_Search_Source_A1_Search_Public_PathManager_h_21_RPC_WRAPPERS \
  \
+	DECLARE_FUNCTION(execSetDefaultSearch); \
 	DECLARE_FUNCTION(execGetSearchTypeName); \
 	DECLARE_FUNCTION(execGetPathFactor);
 
 
 #define A1_Search_Source_A1_Search_Public_PathManager_h_21_RPC_WRAPPERS_NO_PURE_DECLS \
  \
+	DECLARE_FUNCTION(execSetDefaultSearch); \
 	DECLARE_FUNCTION(execGetSearchTypeName); \
 	DECLARE_FUNCTION(execGetPathFactor);
 
