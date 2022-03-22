@@ -40,6 +40,13 @@ class A1_SEARCH_API AShip : public AActor
 	UPROPERTY()
     APathManager* PathManager;
 
+	// The maximum morale of the ship
+	static constexpr int MAX_MORALE = 50;
+
+	// The current morale of the ship
+	UPROPERTY(BlueprintReadOnly)
+	int Morale;
+
 	
 	/**************************************************************/
 	

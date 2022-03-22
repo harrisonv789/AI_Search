@@ -14,6 +14,7 @@ AShip::AShip()
 	// Set up some of the data
 	MoveSpeed = 300;
 	Tolerance = 5;
+	Morale = MAX_MORALE;
 }
 
 // Called when the game starts or when spawned
@@ -52,6 +53,9 @@ void AShip::Tick(float DeltaTime)
 			CurrentPosition = TargetPosition;
 			PathManager->StartNode = Path[0];
 			Path.RemoveAt(0);
+
+			// Subtract a morale
+			Morale--;
 		}
 
 		// Update the actor location
@@ -62,6 +66,9 @@ void AShip::Tick(float DeltaTime)
 	else
 	{
 		GeneratePath = true;
+
+		// Reset the morale
+		Morale = MAX_MORALE;
 	}
 }
 
