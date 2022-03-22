@@ -30,6 +30,11 @@ float GridNode::GetTravelCost() const
 	return GridTypeCost(GridType);
 }
 
+bool GridNode::IsTraversable() const
+{
+	return GridType != Land;
+}
+
 float GridNode::GetNodeSpeed() const
 {
 	// Check the grid type and return the correct speed factor

@@ -134,7 +134,7 @@ void APathManager::CalculateDFS()
 			tempNode = LevelGenerator->WorldArray[currentNode->X][currentNode->Y - 1];
 
 			// Check to make sure the node hasn't been visited AND is not closed (Land)
-			if (tempNode->GridType != Land && !tempNode->IsChecked)
+			if (tempNode->IsTraversable() && !tempNode->IsChecked)
 			{
 				tempNode->IsChecked = true;
 				tempNode->Parent = currentNode;
@@ -146,7 +146,7 @@ void APathManager::CalculateDFS()
 		if (currentNode->X + 1 < LevelGenerator->MapSizeX - 1)
 		{
 			tempNode = LevelGenerator->WorldArray[currentNode->X + 1][currentNode->Y];
-			if (tempNode->GridType != Land && !tempNode->IsChecked)
+			if (tempNode->IsTraversable() && !tempNode->IsChecked)
 			{
 				tempNode->IsChecked = true;
 				tempNode->Parent = currentNode;
@@ -158,7 +158,7 @@ void APathManager::CalculateDFS()
 		if (currentNode->Y + 1 < LevelGenerator->MapSizeY - 1)
 		{
 			tempNode = LevelGenerator->WorldArray[currentNode->X][currentNode->Y + 1];
-			if (tempNode->GridType != Land && !tempNode->IsChecked)
+			if (tempNode->IsTraversable() && !tempNode->IsChecked)
 			{
 				tempNode->IsChecked = true;
 				tempNode->Parent = currentNode;
@@ -170,7 +170,7 @@ void APathManager::CalculateDFS()
 		if (currentNode->X - 1 > 0)
 		{
 			tempNode = LevelGenerator->WorldArray[currentNode->X - 1][currentNode->Y];
-			if (tempNode->GridType != Land && !tempNode->IsChecked)
+			if (tempNode->IsTraversable() && !tempNode->IsChecked)
 			{
 				tempNode->IsChecked = true;
 				tempNode->Parent = currentNode;
@@ -215,7 +215,7 @@ void APathManager::CalculateBFS()
 			tempNode = LevelGenerator->WorldArray[currentNode->X][currentNode->Y - 1];
 
 			// Check to make sure the node hasn't been visited AND is not closed (Land)
-			if (tempNode->GridType != Land && !tempNode->IsChecked)
+			if (tempNode->IsTraversable() && !tempNode->IsChecked)
 			{
 				tempNode->IsChecked = true;
 				tempNode->Parent = currentNode;
@@ -227,7 +227,7 @@ void APathManager::CalculateBFS()
 		if (currentNode->X + 1 < LevelGenerator->MapSizeX - 1)
 		{
 			tempNode = LevelGenerator->WorldArray[currentNode->X + 1][currentNode->Y];
-			if (tempNode->GridType != Land && !tempNode->IsChecked)
+			if (tempNode->IsTraversable() && !tempNode->IsChecked)
 			{
 				tempNode->IsChecked = true;
 				tempNode->Parent = currentNode;
@@ -239,7 +239,7 @@ void APathManager::CalculateBFS()
 		if (currentNode->Y + 1 < LevelGenerator->MapSizeY - 1)
 		{
 			tempNode = LevelGenerator->WorldArray[currentNode->X][currentNode->Y + 1];
-			if (tempNode->GridType != Land && !tempNode->IsChecked)
+			if (tempNode->IsTraversable() && !tempNode->IsChecked)
 			{
 				tempNode->IsChecked = true;
 				tempNode->Parent = currentNode;
@@ -251,7 +251,7 @@ void APathManager::CalculateBFS()
 		if (currentNode->X - 1 > 0)
 		{
 			tempNode = LevelGenerator->WorldArray[currentNode->X - 1][currentNode->Y];
-			if (tempNode->GridType != Land && !tempNode->IsChecked)
+			if (tempNode->IsTraversable() && !tempNode->IsChecked)
 			{
 				tempNode->IsChecked = true;
 				tempNode->Parent = currentNode;
@@ -330,6 +330,10 @@ void APathManager::CalculateAStar(float weight)
 		// Loop through each node accessible from the current node
 		for (GridNode* nextNode : accessibleNodes)
 		{
+			// Ensure the next node is traversable
+			if (!nextNode->IsTraversable())
+				continue;
+			
 			// Ensure the next node isn't on the closed list
 			if (closedList.Contains(nextNode))
 				continue;

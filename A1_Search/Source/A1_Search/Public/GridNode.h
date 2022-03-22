@@ -56,6 +56,12 @@ class A1_SEARCH_API GridNode
 	float GetTravelCost () const;
 
 	/**
+	 * @brief Returns whether this tile is traversable
+	 * @return The traversable flag
+	 */
+	bool IsTraversable () const;
+
+	/**
 	 * @brief Calculates the speed factor when crossing this node
 	 * @return The speed factor
 	 */
