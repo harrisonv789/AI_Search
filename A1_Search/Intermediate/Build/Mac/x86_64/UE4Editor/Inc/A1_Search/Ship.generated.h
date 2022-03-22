@@ -16,11 +16,13 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define A1_Search_Source_A1_Search_Public_Ship_h_20_SPARSE_DATA
 #define A1_Search_Source_A1_Search_Public_Ship_h_20_RPC_WRAPPERS \
  \
+	DECLARE_FUNCTION(execFindNewGold); \
 	DECLARE_FUNCTION(execGetMoveSpeed);
 
 
 #define A1_Search_Source_A1_Search_Public_Ship_h_20_RPC_WRAPPERS_NO_PURE_DECLS \
  \
+	DECLARE_FUNCTION(execFindNewGold); \
 	DECLARE_FUNCTION(execGetMoveSpeed);
 
 

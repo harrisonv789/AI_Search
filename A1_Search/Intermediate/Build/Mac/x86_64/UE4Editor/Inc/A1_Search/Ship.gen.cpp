@@ -20,6 +20,13 @@ void EmptyLinkFunctionForGeneratedCodeShip() {}
 	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FVector();
 	A1_SEARCH_API UClass* Z_Construct_UClass_APathManager_NoRegister();
 // End Cross Module References
+	DEFINE_FUNCTION(AShip::execFindNewGold)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->FindNewGold();
+		P_NATIVE_END;
+	}
 	DEFINE_FUNCTION(AShip::execGetMoveSpeed)
 	{
 		P_FINISH;
@@ -31,9 +38,34 @@ void EmptyLinkFunctionForGeneratedCodeShip() {}
 	{
 		UClass* Class = AShip::StaticClass();
 		static const FNameNativePtrPair Funcs[] = {
+			{ "FindNewGold", &AShip::execFindNewGold },
 			{ "GetMoveSpeed", &AShip::execGetMoveSpeed },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
+	}
+	struct Z_Construct_UFunction_AShip_FindNewGold_Statics
+	{
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UE4CodeGen_Private::FFunctionParams FuncParams;
+	};
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AShip_FindNewGold_Statics::Function_MetaDataParams[] = {
+		{ "Comment", "/**\n\x09 * @brief Starts looking for new gold on the map\n\x09 */" },
+		{ "ModuleRelativePath", "Public/Ship.h" },
+		{ "ToolTip", "@brief Starts looking for new gold on the map" },
+	};
+#endif
+	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AShip_FindNewGold_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AShip, nullptr, "FindNewGold", nullptr, nullptr, 0, nullptr, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AShip_FindNewGold_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AShip_FindNewGold_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_AShip_FindNewGold()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AShip_FindNewGold_Statics::FuncParams);
+		}
+		return ReturnFunction;
 	}
 	struct Z_Construct_UFunction_AShip_GetMoveSpeed_Statics
 	{
@@ -93,6 +125,15 @@ void EmptyLinkFunctionForGeneratedCodeShip() {}
 #endif
 		static const UE4CodeGen_Private::FStructPropertyParams NewProp_MoveHeading;
 #if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_Treasure_MetaData[];
+#endif
+		static const UE4CodeGen_Private::FUnsizedIntPropertyParams NewProp_Treasure;
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_HasFoundGold_MetaData[];
+#endif
+		static void NewProp_HasFoundGold_SetBit(void* Obj);
+		static const UE4CodeGen_Private::FBoolPropertyParams NewProp_HasFoundGold;
+#if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_PathManager_MetaData[];
 #endif
 		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_PathManager;
@@ -109,6 +150,7 @@ void EmptyLinkFunctionForGeneratedCodeShip() {}
 		(UObject* (*)())Z_Construct_UPackage__Script_A1_Search,
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_AShip_Statics::FuncInfo[] = {
+		{ &Z_Construct_UFunction_AShip_FindNewGold, "FindNewGold" }, // 2691111029
 		{ &Z_Construct_UFunction_AShip_GetMoveSpeed, "GetMoveSpeed" }, // 1184490506
 	};
 #if WITH_METADATA
@@ -147,6 +189,28 @@ void EmptyLinkFunctionForGeneratedCodeShip() {}
 #endif
 	const UE4CodeGen_Private::FStructPropertyParams Z_Construct_UClass_AShip_Statics::NewProp_MoveHeading = { "MoveHeading", nullptr, (EPropertyFlags)0x0010000000000014, UE4CodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AShip, MoveHeading), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UClass_AShip_Statics::NewProp_MoveHeading_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AShip_Statics::NewProp_MoveHeading_MetaData)) };
 #if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AShip_Statics::NewProp_Treasure_MetaData[] = {
+		{ "Category", "Ship" },
+		{ "Comment", "// The amount of treasure collected\n" },
+		{ "ModuleRelativePath", "Public/Ship.h" },
+		{ "ToolTip", "The amount of treasure collected" },
+	};
+#endif
+	const UE4CodeGen_Private::FUnsizedIntPropertyParams Z_Construct_UClass_AShip_Statics::NewProp_Treasure = { "Treasure", nullptr, (EPropertyFlags)0x0010000000000014, UE4CodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AShip, Treasure), METADATA_PARAMS(Z_Construct_UClass_AShip_Statics::NewProp_Treasure_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AShip_Statics::NewProp_Treasure_MetaData)) };
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AShip_Statics::NewProp_HasFoundGold_MetaData[] = {
+		{ "Category", "Ship" },
+		{ "Comment", "// Whether the current gold is collected\n" },
+		{ "ModuleRelativePath", "Public/Ship.h" },
+		{ "ToolTip", "Whether the current gold is collected" },
+	};
+#endif
+	void Z_Construct_UClass_AShip_Statics::NewProp_HasFoundGold_SetBit(void* Obj)
+	{
+		((AShip*)Obj)->HasFoundGold = 1;
+	}
+	const UE4CodeGen_Private::FBoolPropertyParams Z_Construct_UClass_AShip_Statics::NewProp_HasFoundGold = { "HasFoundGold", nullptr, (EPropertyFlags)0x0010000000000014, UE4CodeGen_Private::EPropertyGenFlags::Bool | UE4CodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(AShip), &Z_Construct_UClass_AShip_Statics::NewProp_HasFoundGold_SetBit, METADATA_PARAMS(Z_Construct_UClass_AShip_Statics::NewProp_HasFoundGold_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AShip_Statics::NewProp_HasFoundGold_MetaData)) };
+#if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AShip_Statics::NewProp_PathManager_MetaData[] = {
 		{ "Comment", "// A reference to the current level\n" },
 		{ "ModuleRelativePath", "Public/Ship.h" },
@@ -167,6 +231,8 @@ void EmptyLinkFunctionForGeneratedCodeShip() {}
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AShip_Statics::NewProp_MoveSpeed,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AShip_Statics::NewProp_Tolerance,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AShip_Statics::NewProp_MoveHeading,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AShip_Statics::NewProp_Treasure,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AShip_Statics::NewProp_HasFoundGold,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AShip_Statics::NewProp_PathManager,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AShip_Statics::NewProp_Morale,
 	};
@@ -197,7 +263,7 @@ void EmptyLinkFunctionForGeneratedCodeShip() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(AShip, 2367080748);
+	IMPLEMENT_CLASS(AShip, 1755137584);
 	template<> A1_SEARCH_API UClass* StaticClass<AShip>()
 	{
 		return AShip::StaticClass();

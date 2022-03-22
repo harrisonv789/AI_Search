@@ -28,6 +28,10 @@ void AShip::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	// If has found gold, ignore
+	if (HasFoundGold)
+		return;
+
 	// Check if the path is not empty
 	if (Path.Num() > 0 && Morale > 0) {
 
@@ -66,10 +70,11 @@ void AShip::Tick(float DeltaTime)
 	// Otherwise, if no path
 	else if (Morale > 0)
 	{
-		GeneratePath = true;
+		// Increase the treasure collected
+		Treasure++;
 
-		// Reset the morale
-		Morale = MAX_MORALE;
+		// Adjust the found gold flag
+		HasFoundGold = true;
 	}
 
 	// If Morale is zero
@@ -85,4 +90,17 @@ float AShip::GetMoveSpeed() const
 	if (Path.Num() > 0)
 		return MoveSpeed * Path[0]->GetNodeSpeed();
 	return 0.0;
+}
+
+
+void AShip::FindNewGold()
+{
+	// Reset the flag
+	HasFoundGold = false;
+
+	// Reset the morale
+	Morale = MAX_MORALE;
+
+	// Generate a new path
+	GeneratePath = true;
 }

@@ -135,6 +135,12 @@ class A1_SEARCH_API APathManager : public AActor
 	 */
 	UFUNCTION(BlueprintCallable)
 	static void SetDefaultSearch (ESearchType type, float weight);
+
+	/**
+	 * @brief Resets the default search variables
+	 */
+	UFUNCTION(BlueprintCallable)
+	static void ResetDefaults ();
 	
 	
 

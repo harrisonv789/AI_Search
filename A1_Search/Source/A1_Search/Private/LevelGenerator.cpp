@@ -170,20 +170,8 @@ void ALevelGenerator::SpawnWorldActors(char Grid[255][255])
 	{
 		SpawnNextGold();
 	}
-
-	// Set the static camera position
-	if (Camera)
-	{
-		FVector CameraPosition = Camera->GetActorLocation();
-
-		// Reset the position
-		CameraPosition.X = MapSizeX * 0.5 * GRID_SIZE_WORLD + 50;
-		CameraPosition.Y = MapSizeY * 0.5 * GRID_SIZE_WORLD + 50;
-
-		// Set the camera location
-		Camera->SetActorLocation(CameraPosition);
-	}
 }
+
 
 void ALevelGenerator::SpawnNextGold()
 {

@@ -461,6 +461,13 @@ void APathManager::SetDefaultSearch(ESearchType type, float weight)
 }
 
 
+void APathManager::ResetDefaults()
+{
+	SetDefaultSearch(W_A_STAR, 2.0);
+	ALevelGenerator::SetShallowWater(true);
+}
+
+
 float APathManager::EstimateCost(GridNode* first, GridNode* second)
 {
 	// TODO For now just calculate the distance between the two as the heuristic

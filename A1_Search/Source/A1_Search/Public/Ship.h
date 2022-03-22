@@ -34,6 +34,14 @@ class A1_SEARCH_API AShip : public AActor
 	UPROPERTY(BlueprintReadOnly)
 	FVector MoveHeading;
 
+	// The amount of treasure collected
+	UPROPERTY(BlueprintReadOnly)
+	int Treasure;
+
+	// Whether the current gold is collected
+	UPROPERTY(BlueprintReadOnly)
+	bool HasFoundGold;
+
     // A list of points on a path to follow
     TArray<GridNode*> Path;
 
@@ -77,6 +85,12 @@ class A1_SEARCH_API AShip : public AActor
 	 */
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetMoveSpeed () const;
+
+	/**
+	 * @brief Starts looking for new gold on the map
+	 */
+	UFUNCTION(BlueprintCallable)
+	void FindNewGold ();
 
 
 	
