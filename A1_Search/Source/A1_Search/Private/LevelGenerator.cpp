@@ -53,15 +53,15 @@ void ALevelGenerator::GenerateWorldFromFile(TArray<FString> WorldArrayString)
     }
 
     // Second line is Height (aka Y value)
-    FString Height = WorldArrayString[1];
-    Height.RemoveFromStart("Height ");
-    MapSizeY = FCString::Atoi(*Height);
+    FString height = WorldArrayString[1];
+    height.RemoveFromStart("Height ");
+    MapSizeY = FCString::Atoi(*height);
     UE_LOG(LogTemp, Warning, TEXT("Height: %d"), MapSizeY);
 
     // Third line is Width (aka X value)
-    FString Width = WorldArrayString[2];
-    Width.RemoveFromStart("width ");
-    MapSizeX = FCString::Atoi(*Width);
+    FString width = WorldArrayString[2];
+    width.RemoveFromStart("width ");
+    MapSizeX = FCString::Atoi(*width);
     UE_LOG(LogTemp, Warning, TEXT("Width: %d"), MapSizeX);
 
 	// Update the path manager
@@ -71,23 +71,23 @@ void ALevelGenerator::GenerateWorldFromFile(TArray<FString> WorldArrayString)
     char CharMapArray[MAX_MAP_SIZE][MAX_MAP_SIZE];
     
     // Read through the Map section for create the CharMapArray
-    for (int LineNum = 4; LineNum < MapSizeY + 4; LineNum++)
+    for (int lineNum = 4; lineNum < MapSizeY + 4; lineNum++)
     {
-    	for (int CharNum = 0; CharNum < WorldArrayString[LineNum].Len(); CharNum++)
+    	for (int charNum = 0; charNum < WorldArrayString[lineNum].Len(); charNum++)
     	{
-    		CharMapArray[LineNum-4][CharNum] = WorldArrayString[LineNum][CharNum];
+    		CharMapArray[lineNum-4][charNum] = WorldArrayString[lineNum][charNum];
     	}
     }
 
     // Read in the Gold positions
-    for (int LineNum = 4 + MapSizeY; LineNum < WorldArrayString.Num(); LineNum++)
+    for (int lineNum = 4 + MapSizeY; lineNum < WorldArrayString.Num(); lineNum++)
     {
-    	FString GoldX, GoldY;
-    	WorldArrayString[LineNum].Split(",", &GoldY, &GoldX);
-    	UE_LOG(LogTemp, Warning, TEXT("GoldX: %s"), *GoldX);
-    	UE_LOG(LogTemp, Warning, TEXT("GoldY: %s"), *GoldY);
+    	FString goldX, goldY;
+    	WorldArrayString[lineNum].Split(",", &goldY, &goldX);
+    	UE_LOG(LogTemp, Warning, TEXT("GoldX: %s"), *goldX);
+    	UE_LOG(LogTemp, Warning, TEXT("GoldY: %s"), *goldY);
 
-    	GoldArray.Add(FVector2D(FCString::Atof(*GoldX), FCString::Atof(*GoldY)));
+    	GoldArray.Add(FVector2D(FCString::Atof(*goldX), FCString::Atof(*goldY)));
 
     }
 
@@ -115,7 +115,7 @@ void ALevelGenerator::SetShallowWater(bool flag)
 void ALevelGenerator::SpawnWorldActors(char Grid[255][255])
 {
 	// Get the current world
-	UWorld* World = GetWorld();
+	UWorld* world = GetWorld();
 
 	// Make sure all blueprints are connected
 	if (DeepBlueprint && ShallowBlueprint && LandBlueprint)
@@ -124,25 +124,25 @@ void ALevelGenerator::SpawnWorldActors(char Grid[255][255])
 		{
 			for (int Y = 0; Y < MapSizeY; Y++)
 			{
-				const float XPos = X * GRID_SIZE_WORLD;
-				const float YPos = Y * GRID_SIZE_WORLD;
+				const float posX = X * GRID_SIZE_WORLD;
+				const float posY = Y * GRID_SIZE_WORLD;
 
-				FVector Position(XPos, YPos, 0);
+				FVector Position(posX, posY, 0);
 
 				switch (Grid[X][Y])
 				{
 					case '.':
 					case 'G':
-						World->SpawnActor(DeepBlueprint, &Position, &FRotator::ZeroRotator);
+						world->SpawnActor(DeepBlueprint, &Position, &FRotator::ZeroRotator);
 						break;
 					case '@':
 					case 'O':
 					case 'S':
 					case 'W':
-						World->SpawnActor(LandBlueprint, &Position, &FRotator::ZeroRotator);
+						world->SpawnActor(LandBlueprint, &Position, &FRotator::ZeroRotator);
 						break;
 					case 'T':
-						World->SpawnActor(ShallowBlueprint, &Position, &FRotator::ZeroRotator);
+						world->SpawnActor(ShallowBlueprint, &Position, &FRotator::ZeroRotator);
 						break;
 					default: break;
 				}
@@ -153,16 +153,16 @@ void ALevelGenerator::SpawnWorldActors(char Grid[255][255])
 	// Generate Initial Agent Positions
     if(ShipBlueprint)
     {
-    	constexpr int XPos = 16; // Default Initial X Position
-    	constexpr int YPos = 23; // Default Initial Y Position
+    	constexpr int posX = 16; // Default Initial X Position
+    	constexpr int posY = 23; // Default Initial Y Position
 
-    	const FVector Position(XPos * GRID_SIZE_WORLD, YPos * GRID_SIZE_WORLD, 20);
-    	Ship = World->SpawnActor<AShip>(ShipBlueprint, Position, FRotator::ZeroRotator);
+    	const FVector position(posX * GRID_SIZE_WORLD, posY * GRID_SIZE_WORLD, 20);
+    	Ship = world->SpawnActor<AShip>(ShipBlueprint, position, FRotator::ZeroRotator);
     	Ship->PathManager = PathManager;
     	PathManager->Ship = Ship;
 
-    	WorldArray[XPos][YPos]->ObjectAtLocation = Ship;
-    	PathManager->StartNode = WorldArray[XPos][YPos];
+    	WorldArray[posX][posY]->ObjectAtLocation = Ship;
+    	PathManager->StartNode = WorldArray[posX][posY];
     }
 
 	// Generate Initial food positions
@@ -176,22 +176,22 @@ void ALevelGenerator::SpawnWorldActors(char Grid[255][255])
 void ALevelGenerator::SpawnNextGold()
 {
 	// Get the current world and remove the firs element from the gold
-	UWorld* World = GetWorld();
+	UWorld* world = GetWorld();
 
 	// Generate Initial Food Positions
 	if (GoldBlueprint && GoldArray.Num() > 0)
 	{
-		int XPos = GoldArray[0].X;
-		int YPos = GoldArray[0].Y;
+		int posX = GoldArray[0].X;
+		int posY = GoldArray[0].Y;
 
 		// Get the position of the gold
-		const FVector Position(XPos * GRID_SIZE_WORLD, YPos * GRID_SIZE_WORLD, 20);
-		AGold* NewGold = World->SpawnActor<AGold>(GoldBlueprint, Position, FRotator::ZeroRotator);
+		const FVector position(posX * GRID_SIZE_WORLD, posY * GRID_SIZE_WORLD, 20);
+		AGold* newGold = world->SpawnActor<AGold>(GoldBlueprint, position, FRotator::ZeroRotator);
 
 		// Store the gold position
-		WorldArray[XPos][YPos]->ObjectAtLocation = NewGold;
-		PathManager->GoalNode = WorldArray[XPos][YPos];
-		GoldActors.Add(NewGold);
+		WorldArray[posX][posY]->ObjectAtLocation = newGold;
+		PathManager->GoalNode = WorldArray[posX][posY];
+		GoldActors.Add(newGold);
 	}
 }
 

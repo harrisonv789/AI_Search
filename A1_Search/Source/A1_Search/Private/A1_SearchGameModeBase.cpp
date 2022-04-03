@@ -6,33 +6,33 @@
 
 TArray<FString> AA1_SearchGameModeBase::GetMapFileList()
 {
-	TArray<FString> MapFiles;
+	TArray<FString> mapFiles;
 
-	const FString MapsDir = FPaths::ProjectContentDir() + "MapFiles/";
-	FPlatformFileManager::Get().GetPlatformFile().FindFiles(MapFiles, *MapsDir, nullptr);
+	const FString mapsDir = FPaths::ProjectContentDir() + "MapFiles/";
+	FPlatformFileManager::Get().GetPlatformFile().FindFiles(mapFiles, *mapsDir, nullptr);
 
-	return MapFiles;
+	return mapFiles;
 }
 
 FString AA1_SearchGameModeBase::GetRandomMapText()
 {
-	TArray<FString> MapFiles = GetMapFileList();
+	TArray<FString> mapFiles = GetMapFileList();
 
-	int32 MapPosition = FMath::RandRange(0, MapFiles.Num() - 1);
-	FString MapPath = MapFiles[MapPosition];
+	int32 mapPosition = FMath::RandRange(0, mapFiles.Num() - 1);
+	FString mapPath = mapFiles[mapPosition];
 
-	FString MapText;
-	FFileHelper::LoadFileToString(MapText, *MapPath);
+	FString mapText;
+	FFileHelper::LoadFileToString(mapText, *mapPath);
 
-	return MapText;
+	return mapText;
 }
 
 TArray<FString> AA1_SearchGameModeBase::GetMapArray()
 {
-	TArray<FString> MapArray;
+	TArray<FString> mapArray;
 
-	FString MapText = GetRandomMapText();
-	MapText.ParseIntoArrayLines(MapArray);
+	FString mapText = GetRandomMapText();
+	mapText.ParseIntoArrayLines(mapArray);
 
-	return MapArray;
+	return mapArray;
 }

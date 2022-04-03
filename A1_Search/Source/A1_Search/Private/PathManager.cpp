@@ -7,7 +7,7 @@
 
 // Store the default search types and weights
 static ESearchType DefaultSearchType = W_A_STAR;
-static float DefaultWeight = 2.0;
+static float DefaultWeight = 1.5;
 
 
 // Sets default values
@@ -314,7 +314,7 @@ void APathManager::CalculateAStar(float weight)
 
 		// Check if the current node is the goal
 		if (currentNode == GoalNode)
-			break; // TODO return path from start node to goal node
+			break;
 
 		// Create a list of accessible nodes
 		TArray<GridNode*> accessibleNodes = {};
@@ -381,26 +381,26 @@ void APathManager::CalculateWeightedAStar()
 void APathManager::RenderPath()
 {
 	// Get the current world and final goal node
-	UWorld* World = GetWorld();
-	GridNode* CurrentNode = GoalNode;
+	UWorld* world = GetWorld();
+	GridNode* currentNode = GoalNode;
 
 	// Create a path render
-	while (CurrentNode->Parent != nullptr)
+	while (currentNode->Parent != nullptr)
 	{
 		// Spawn the new path node
-		const FVector Position(CurrentNode->X * ALevelGenerator::GRID_SIZE_WORLD, CurrentNode->Y * ALevelGenerator::GRID_SIZE_WORLD, 20);
-		AActor* PDActor = World->SpawnActor<AActor>(PathDisplayBlueprint, Position, FRotator::ZeroRotator);
-		PathDisplayActors.Add(PDActor);
+		const FVector position(currentNode->X * ALevelGenerator::GRID_SIZE_WORLD, currentNode->Y * ALevelGenerator::GRID_SIZE_WORLD, 20);
+		AActor* pdActor = world->SpawnActor<AActor>(PathDisplayBlueprint, position, FRotator::ZeroRotator);
+		PathDisplayActors.Add(pdActor);
 
 		// Move the ship to the next node
 		if (Ship)
-			Ship->Path.EmplaceAt(0, LevelGenerator->WorldArray[CurrentNode->X][CurrentNode->Y]);
-		CurrentNode = CurrentNode->Parent;
+			Ship->Path.EmplaceAt(0, LevelGenerator->WorldArray[currentNode->X][currentNode->Y]);
+		currentNode = currentNode->Parent;
 
 		// Add all the cost to move from each node
-		if (CurrentNode != GoalNode)
+		if (currentNode != GoalNode)
 		{
-			PathCost += CurrentNode->GetTravelCost();
+			PathCost += currentNode->GetTravelCost();
 			PathLength++;
 		}
 	}
@@ -467,7 +467,7 @@ void APathManager::SetDefaultSearch(ESearchType type, float weight)
 
 void APathManager::ResetDefaults()
 {
-	SetDefaultSearch(W_A_STAR, 2.0);
+	SetDefaultSearch(W_A_STAR, 1.5);
 	ALevelGenerator::SetShallowWater(true);
 }
 

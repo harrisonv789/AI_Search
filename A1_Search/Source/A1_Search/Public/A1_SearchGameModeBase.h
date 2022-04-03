@@ -8,7 +8,7 @@
 #include "A1_SearchGameModeBase.generated.h"
 
 /**
- * Main base class for loading arrays
+ * Main base class for loading map files into lists
  */
 UCLASS()
 class A1_SEARCH_API AA1_SearchGameModeBase : public AGameModeBase

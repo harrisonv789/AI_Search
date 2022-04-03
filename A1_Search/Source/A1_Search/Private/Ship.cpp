@@ -36,26 +36,26 @@ void AShip::Tick(float DeltaTime)
 	if (Path.Num() > 0 && Morale > 0) {
 
 		// Get the current position
-		FVector CurrentPosition = GetActorLocation();
-		const float TargetXPos = Path[0]->X * ALevelGenerator::GRID_SIZE_WORLD + POSITION_OFFSET_X;
-		const float TargetYPos = Path[0]->Y * ALevelGenerator::GRID_SIZE_WORLD + POSITION_OFFSET_Y;
+		FVector currentPosition = GetActorLocation();
+		const float targetPosX = Path[0]->X * ALevelGenerator::GRID_SIZE_WORLD + POSITION_OFFSET_X;
+		const float targetPosY = Path[0]->Y * ALevelGenerator::GRID_SIZE_WORLD + POSITION_OFFSET_Y;
 
 		// Determine the target position
-		const FVector TargetPosition = FVector(TargetXPos, TargetYPos, CurrentPosition.Z);
+		const FVector targetPosition = FVector(targetPosX, targetPosY, currentPosition.Z);
 
 		// Determine the unit direction
-		FVector Direction = TargetPosition - CurrentPosition;
-		Direction.Normalize();
-		MoveHeading = Direction;
+		FVector direction = targetPosition - currentPosition;
+		direction.Normalize();
+		MoveHeading = direction;
 
 		// Alter the current position
-		CurrentPosition += Direction * DeltaTime * GetMoveSpeed();
+		currentPosition += direction * DeltaTime * GetMoveSpeed();
 
 		// Check for a new point
-		if (FVector::Dist(CurrentPosition, TargetPosition) <= Tolerance)
+		if (FVector::Dist(currentPosition, targetPosition) <= Tolerance)
 		{
 			// Update the position to the actual target
-			CurrentPosition = TargetPosition;
+			currentPosition = targetPosition;
 			PathManager->StartNode = Path[0];
 			Path.RemoveAt(0);
 
@@ -64,7 +64,7 @@ void AShip::Tick(float DeltaTime)
 		}
 
 		// Update the actor location
-		SetActorLocation(CurrentPosition);
+		SetActorLocation(currentPosition);
 	}
 
 	// Otherwise, if no path
@@ -77,7 +77,7 @@ void AShip::Tick(float DeltaTime)
 		HasFoundGold = true;
 	}
 
-	// If Morale is zero
+	// If Morale is zero, hide the path
 	if (Morale <= 0)
 	{
 		PathManager->ResetPath();
@@ -95,7 +95,7 @@ float AShip::GetMoveSpeed() const
 
 void AShip::FindNewGold()
 {
-	// Reset the flag
+	// Reset the gold flag
 	HasFoundGold = false;
 
 	// Reset the morale

@@ -4,7 +4,7 @@
 #pragma once
 
 /*
- * Describes different types of environments
+ * Describes different types of environmental tiles
  */
 UENUM(Blueprintable, BlueprintType)
 enum EGridType

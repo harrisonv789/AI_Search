@@ -12,7 +12,7 @@
 
 
 /*
- * This class generates the level in the world
+ * This class generates the level in the world and spawns the actors
  */
 UCLASS()
 class A1_SEARCH_API ALevelGenerator : public AActor

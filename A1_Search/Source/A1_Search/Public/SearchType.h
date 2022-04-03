@@ -3,6 +3,9 @@
 
 #pragma once
 
+/*
+ * List of different search algorithms that can be implemented
+ */
 UENUM(Blueprintable, BlueprintType)
 enum ESearchType
 {
